@@ -2,15 +2,11 @@
 <div>
   <div class="tabs is-toggle is-fullwidth">
     <ul>
-      <li class="is-active">
-        <a>
-          <span>Buy</span>
-        </a>
+      <li id="buy-tab" class="is-active">
+        <span><a @click="uiSetBuy">Buy</a></span>
       </li>
-      <li>
-        <a>
-          <span>Sell</span>
-        </a>
+      <li id="sell-tab">
+        <span><a @click="uiSetSell">Sell</a></span>
       </li>
     </ul>
   </div>
@@ -45,13 +41,34 @@
     </p>
   </div>
   <br/>
-  <button class="button is-success is-fullwidth">Place Buy Order</button>
+  <button id="order-button" class="button is-success is-fullwidth">Place {{orderType}} Order</button>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'OrderForm'
+  name: 'OrderForm',
+  data() {
+    return {
+      orderType: "Buy"
+    }
+  },
+  methods: {
+    uiSetSell() {
+      document.getElementById("buy-tab").classList.remove("is-active");
+      document.getElementById("sell-tab").classList.add("is-active");
+      document.getElementById("order-button").classList.remove("is-success");
+      document.getElementById("order-button").classList.add("is-danger");
+      this.orderType = "Sell";
+    },
+    uiSetBuy() {
+      document.getElementById("sell-tab").classList.remove("is-active");
+      document.getElementById("buy-tab").classList.add("is-active");
+      document.getElementById("order-button").classList.remove("is-danger");
+      document.getElementById("order-button").classList.add("is-success");
+      this.orderType = "Buy";
+    }
+  }
 }
 </script>
 
