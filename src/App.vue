@@ -1,22 +1,22 @@
 <template>
 <div class="tile is-ancestor" id="root">
   <div class="tile is-parent is-vertical is-4">
-    <div class="tile is-child is-12 is-vertical box">
-      <p class="title">Currency Select</p>
+    <div class="message-header">Price Chart</div>
+    <div class="tile is-child is-12 is-vertical box message-body">
       <CurrencySelect/>
     </div>
-    <div class="tile is-child box">
-      <p class="title">Order Form</p>
+    <div class="message-header">Order Form</div>
+    <div class="tile is-child box message-body">
       <OrderForm/>
     </div>
   </div>
   <div class="tile is-8 is-vertical is-parent">
-    <div class="tile is-child box">
-      <p class="title">Price Chart</p>
+    <div class="message-header">Price Chart</div>
+    <div class="tile is-child box message-body">
       <PriceChart/>
     </div>
-    <div class="tile is-child box">
-      <p class="title">Order History</p>
+    <div class="message-header">Order History</div>
+    <div class="tile is-child box message-body">
       <OrderHistory/>
     </div>
   </div>
@@ -44,6 +44,12 @@ export default {
 #root {
     position: fixed;
     top: 0; right: 0; bottom: 0; left: 0;
-    margin: 0.5rem;
+    margin: 0rem;
+    background-color: gainsboro;
+}
+
+.message-header {
+  background-color: whitesmoke;
+  color: black;
 }
 </style>
