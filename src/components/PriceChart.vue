@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <div class ="container">
 
@@ -83,3 +84,18 @@ ul#list li{
   margin:3rem;
 }
 </style>
+=======
+<template>
+<div></div>
+</template>
+
+<script>
+export default {
+  name: 'PriceChart'
+}
+</script>
+
+<style scoped>
+
+</style>
+>>>>>>> 9addbcea2ebf98f64ab23932f6d629b5d82ea48c

@@ -1,28 +1,55 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="tile is-ancestor" id="root">
+  <div class="tile is-parent is-vertical is-4">
+    <div class="message-header">Price Chart</div>
+    <div class="tile is-child is-12 is-vertical box message-body">
+      <CurrencySelect/>
+    </div>
+    <div class="message-header">Order Form</div>
+    <div class="tile is-child box message-body">
+      <OrderForm/>
+    </div>
   </div>
+  <div class="tile is-8 is-vertical is-parent">
+    <div class="message-header">Price Chart</div>
+    <div class="tile is-child box message-body">
+      <PriceChart/>
+    </div>
+    <div class="message-header">Order History</div>
+    <div class="tile is-child box message-body">
+      <OrderHistory/>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CurrencySelect from './components/CurrencySelect.vue'
+import OrderForm from './components/OrderForm.vue'
+import PriceChart from './components/PriceChart.vue'
+import OrderHistory from './components/OrderHistory.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CurrencySelect,
+    OrderForm,
+    PriceChart,
+    OrderHistory
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+#root {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: 0rem;
+    background-color: gainsboro;
+}
+
+.message-header {
+  background-color: whitesmoke;
+  color: black;
 }
 </style>
