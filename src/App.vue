@@ -6,7 +6,6 @@
     </div>
     <div class="tile is-child box">
       <p class="title">Order Form</p>
-      <OrderForm/>
     </div>
   </div>
   <div class="tile is-8 is-vertical is-parent">
