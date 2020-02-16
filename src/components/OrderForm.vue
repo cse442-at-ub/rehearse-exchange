@@ -12,48 +12,46 @@
   </div>
   <div class="tabs is-fullwidth">
     <ul>
-      <li>
-        <a>
-          <span>Market</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <span>Limit</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <span>Stop</span>
-        </a>
+      <li v-for="tab in tabComponents" :key="tab.label" :class="{ 'is-active': currentTab === tab }">
+        <a @click="changeTab(tab)">{{tab.label}}</a>
       </li>
     </ul>
   </div>
-  <span>Amount</span>
-  <div class="field has-addons has-addons-centered">
-    <p class="control is-expanded">
-      <input class="input is-fullwidth" type="text" placeholder="0.00">
-    </p>
-    <p class="control">
-      <a class="button is-outlined is-static">
-        <span>USD</span>
-      </a>
-    </p>
-  </div>
+  <component :is="currentTab"/>
   <br/>
   <button id="order-button" class="button is-success is-fullwidth">Place {{orderType}} Order</button>
 </div>
 </template>
 
 <script>
+import MarketTab from "./MarketTab.vue";
+import LimitTab from "./LimitTab.vue";
+import StopTab from "./StopTab.vue";
+
 export default {
   name: 'OrderForm',
+  components: {
+    MarketTab,
+    LimitTab,
+    StopTab,
+  },
   data() {
     return {
-      orderType: "Buy"
+      orderType: "Buy",
+      currentTab: MarketTab
+    }
+  },
+  computed: {
+    tabComponents() {
+      return Object
+        .values(this.$options.components)
+        .filter(tab => Object.prototype.hasOwnProperty.call(tab, "label"));
     }
   },
   methods: {
+    changeTab(tab) {
+      this.currentTab = tab;
+    },
     uiSetSell() {
       document.getElementById("buy-tab").classList.remove("is-active");
       document.getElementById("sell-tab").classList.add("is-active");
