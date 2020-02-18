@@ -1,6 +1,5 @@
 <template>
-  <div class="table-container">
-
+  <div class="table-container is-scrollable">
     <table class="table is-bordered is-striped is-narrow is-haveable">
       <thead>
         <th>Fills</th>
@@ -117,3 +116,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.table-container {
+  width: 99%;
+  overflow: auto;
+  max-height: 100%;
+}
+
+.table {
+  width: 99%;
+}
+
+</style>

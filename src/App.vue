@@ -1,7 +1,7 @@
 <template>
 <div class="tile is-ancestor" id="root">
   <div class="tile is-parent is-vertical is-4">
-    <div class="message-header">Price Chart</div>
+    <div class="message-header">Currency Select</div>
     <div class="tile is-child is-12 is-vertical box message-body">
       <CurrencySelect/>
     </div>
@@ -12,11 +12,11 @@
   </div>
   <div class="tile is-8 is-vertical is-parent">
     <div class="message-header">Price Chart</div>
-    <div class="tile is-child box message-body">
+    <div class="tile is-child box message-body" id="price-chart-tile">
       <PriceChart/>
     </div>
     <div class="message-header">Order History</div>
-    <div class="tile is-child box message-body">
+    <div class="tile is-child box message-body" id="order-history-tile">
       <OrderHistory/>
     </div>
   </div>
@@ -41,15 +41,25 @@ export default {
 </script>
 
 <style scoped>
+
 #root {
-    position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
-    margin: 0rem;
-    background-color: gainsboro;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: 0rem;
+  background-color: gainsboro;
+  height: 100vh;
 }
 
 .message-header {
   background-color: whitesmoke;
   color: black;
 }
+
+#price-chart-tile {
+  max-height: 60%;
+}
+
+#order-history-tile {
+  max-height: 30%;
+}
+
 </style>
