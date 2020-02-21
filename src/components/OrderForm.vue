@@ -71,8 +71,4 @@ export default {
 </script>
 
 <style scoped>
-#root-orderform {
-  display: flex;
-  justify-content: center;
-}
 </style>
