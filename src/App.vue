@@ -3,8 +3,10 @@
   <div class="tile is-parent is-vertical is-4">
     <div class="message-header">Currency Select</div>
     <div class="tile is-child is-12 is-vertical box message-body">
-      <CurrencySelect/>
+      <div class="currencySelect"><CurrencySelect/></div>
+      <div class="currentCurrency"><CurrentCurrencies/></div>
     </div>
+
     <div class="message-header">Order Form</div>
     <div class="tile is-child box message-body">
       <OrderForm/>
@@ -28,6 +30,7 @@ import CurrencySelect from './components/CurrencySelect.vue'
 import OrderForm from './components/OrderForm.vue'
 import PriceChart from './components/PriceChart.vue'
 import OrderHistory from './components/OrderHistory.vue'
+import CurrentCurrencies from './components/CurrentCurrencies.vue'
 
 export default {
   name: 'App',
@@ -35,7 +38,17 @@ export default {
     CurrencySelect,
     OrderForm,
     PriceChart,
-    OrderHistory
+    OrderHistory,
+    CurrentCurrencies
+  },
+  data(){
+    return{
+      btcAmount:1000,
+      ethAmount:200,
+      ltcAmount:0,
+      xrpAmount:1000,
+      linkAmount:1
+    }
   }
 }
 </script>
@@ -61,5 +74,12 @@ export default {
 #order-history-tile {
   max-height: 30%;
 }
-
+.currencySelect{
+  display:inline;
+  float:left;
+}
+.currentCurrency{
+  display:inline;
+  float:right;
+}
 </style>
