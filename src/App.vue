@@ -49,7 +49,7 @@ export default {
       xrpAmount:1000,
       linkAmount:1
     }
-  }
+  },
 }
 </script>
 
@@ -76,12 +76,6 @@ export default {
   overflow: auto;
   height: 20vh;
 }
-
-
-
-
-
-
 
 .currencySelect{
   display:inline;

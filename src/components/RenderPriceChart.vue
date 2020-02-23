@@ -5,19 +5,25 @@ export default {
   extends: Line,
     mounted () {
     this.renderChart({
-        labels: ['November', 'December', 'January', 'February'],
-        datasets: [
-        {
-            label: 'BTC Price',
-            data: [5, 10000]
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Nov', 'Dec'],
+        datasets: [{
+            lineTension: 0,
+            fill: false,
+            borderColor: "#55b6f9",
+            pointRadius: 2,
+            label: 'BTC',
+            data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+        }]
+        }, {
+            responsive: true,
+            maintainAspectRatio: false
+        }, {
+        legend: { //hides the legend
+            display: false,
+         },
         }
-        ]},
-        {
-        responsive: true,
-        maintainAspectRatio: false
-        }
-    )
-    }
+
+    )}
 
 }
 
