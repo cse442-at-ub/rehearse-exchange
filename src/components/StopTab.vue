@@ -18,7 +18,7 @@
     </p>
     <p class="control">
       <a class="button is-outlined is-static">
-        <span>BTC</span>
+        <span>{{this.$parent.$parent.selectedCurrencyGet}}</span>
       </a>
     </p>
   </div>

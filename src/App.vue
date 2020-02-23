@@ -3,10 +3,9 @@
   <div class="tile is-parent is-vertical is-4">
     <div class="message-header">Currency Select</div>
     <div class="tile is-child box message-body" id="currency-select">
-      <div class="currencySelect"><CurrencySelect/></div>
+      <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
       <div class="currentCurrency"><CurrentCurrencies/></div>
     </div>
-
     <div class="message-header">Order Form</div>
     <div class="tile is-child box message-body" id="order-form">
       <OrderForm/>
@@ -39,7 +38,12 @@ export default {
     OrderForm,
     PriceChart,
     OrderHistory,
-    CurrentCurrencies
+    CurrentCurrencies,
+  },
+  methods: {
+    changeCurrencies(get){
+      this.selectedCurrencyGet = get;
+    }
   },
   data(){
     return{
@@ -47,9 +51,12 @@ export default {
       ethAmount:200,
       ltcAmount:0,
       xrpAmount:1000,
-      linkAmount:1
+      linkAmount:1,
+      selectedCurrencyGet: "BTC",
+      selectedCurrencyGive: "USD",
+
     }
-  },
+  }
 }
 </script>
 
@@ -58,12 +65,12 @@ export default {
 #root {
   top: 0; right: 0; bottom: 0; left: 0;
   margin: 0rem;
-  background-color: gainsboro;
+  background-color: #dcdcdc;
   height: 100vh;
 }
 
 .message-header {
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   color: black;
 }
 

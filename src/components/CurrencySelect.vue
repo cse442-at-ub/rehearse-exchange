@@ -2,23 +2,23 @@
 <div>
   <div class="select">
     <select>
-      <option>
-        <button class="button">BTC-USD</button>
+      <option @click = "getCurrencies('BTC')">
+        <button class="button" >BTC-USD</button>
       </option>
        <hr class="dropdown-divider">
-      <option>
+      <option @click = "getCurrencies('ETH')">
         <button class="button">ETH-USD</button>
       </option>
       <hr class="dropdown-divider">
-      <option>
+      <option @click = "getCurrencies('LTC')">
         <button class="button">LTC-USD</button>
       </option>
       <hr class="dropdown-divider">
-      <option>
+      <option @click = "getCurrencies('XRP')">
         <button class="button">XRP-USD</button>
       </option>
       <hr class="dropdown-divider">
-      <option>
+      <option @click = "getCurrencies('LINK')">
         <button class="button">LINK-USD</button>
       </option>
     </select>
@@ -30,7 +30,16 @@
 export default {
   name: 'CurrencySelect',
   props: {
-    selectedCurrency: String
+
+  },
+  methods:{
+    getCurrencies(alpha) {
+      this.$emit('getCurrencies', alpha);
+
+    }
+
   }
 }
+
 </script>
+
