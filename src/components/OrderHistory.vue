@@ -10,6 +10,7 @@
           <th><abbr title="Price">Price</abbr></th>
           <th><abbr title="Fee">Fee</abbr></th>
           <th><abbr title="Time">Time</abbr></th>
+          <th><abbr title="Status">Status</abbr></th>
           <th><abbr title="Delete"></abbr></th>
         </tr>
       </thead>
@@ -19,7 +20,8 @@
           <td>50.000000000</td>
           <td>100.00</td>
           <td>.55624</td>
-          <td>5h</td>
+          <td>1m</td>
+          <td>Unfilled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -29,6 +31,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -38,6 +41,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -47,6 +51,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -56,6 +61,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -65,6 +71,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -74,6 +81,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -83,6 +91,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -92,6 +101,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -101,6 +111,7 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
+          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
       </tbody>
