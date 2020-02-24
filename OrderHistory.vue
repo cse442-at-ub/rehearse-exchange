@@ -1,5 +1,6 @@
 <template>
-  <div class="table-container is-scrollable">
+  <div class="table-container">
+
     <table class="table is-bordered is-striped is-narrow is-haveable">
       <thead>
         <th>Fills</th>
@@ -9,7 +10,6 @@
           <th><abbr title="Price">Price</abbr></th>
           <th><abbr title="Fee">Fee</abbr></th>
           <th><abbr title="Time">Time</abbr></th>
-          <th><abbr title="Status">Status</abbr></th>
           <th><abbr title="Delete"></abbr></th>
         </tr>
       </thead>
@@ -19,8 +19,7 @@
           <td>50.000000000</td>
           <td>100.00</td>
           <td>.55624</td>
-          <td>1m</td>
-          <td>Unfilled</td>
+          <td>5h</td>
           <td><button>x</button></td>
         </tr>
 
@@ -30,7 +29,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -40,7 +38,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -50,7 +47,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -60,7 +56,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -70,7 +65,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -80,7 +74,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -90,7 +83,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -100,7 +92,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
 
@@ -110,7 +101,6 @@
           <td>100.00</td>
           <td>.55624</td>
           <td>5h</td>
-          <td>Filled</td>
           <td><button>x</button></td>
         </tr>
       </tbody>
@@ -127,17 +117,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-.table-container {
-  width: 99%;
-  overflow: auto;
-  max-height: 100%;
-}
-
-.table {
-  width: 99%;
-}
-
-</style>
