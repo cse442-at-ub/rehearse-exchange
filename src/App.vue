@@ -4,7 +4,9 @@
     <div class="message-header">Currency Select</div>
     <div class="tile is-child box message-body" id="currency-select">
       <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
+      <div class="addCurrencies"><AddCurrencies/></div>
       <div class="currentCurrency"><CurrentCurrencies/></div>
+
     </div>
     <div class="message-header">Order Form</div>
     <div class="tile is-child box message-body" id="order-form">
@@ -30,6 +32,7 @@ import OrderForm from './components/OrderForm.vue'
 import PriceChart from './components/PriceChart.vue'
 import OrderHistory from './components/OrderHistory.vue'
 import CurrentCurrencies from './components/CurrentCurrencies.vue'
+import AddCurrencies from './components/AddCurrencies.vue'
 
 export default {
   name: 'App',
@@ -39,6 +42,7 @@ export default {
     PriceChart,
     OrderHistory,
     CurrentCurrencies,
+    AddCurrencies,
   },
   methods: {
     changeCurrencies(get){
@@ -90,6 +94,10 @@ export default {
 }
 .currentCurrency{
   display:inline;
+  float:right;
+}
+.addCurrencies{
+  display:block;
   float:right;
 }
 </style>
