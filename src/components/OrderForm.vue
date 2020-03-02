@@ -17,7 +17,7 @@
       </li>
     </ul>
   </div>
-  <component :is="currentTab"/>
+  <component :is="currentTab" @changeOrderAmount="orderAmount = $event" @changeOrderLimitPrice="orderLimitPrice = $event"/>
   <br/>
   <button id="order-button" class="button is-success is-fullwidth">Place {{orderType}} Order</button>
 </div>
@@ -38,7 +38,10 @@ export default {
   data() {
     return {
       orderType: "Buy",
-      currentTab: MarketTab
+      currentTab: MarketTab,
+      orderAmount: null,
+      orderLimitPrice: null,
+      orderStopPrice: null,
     }
   },
   computed: {
