@@ -3,7 +3,7 @@
   <span>Amount</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
-      <input class="input is-fullwidth" type="text" placeholder="0.00">
+      <input class="input is-fullwidth" v-model="orderAmount" type="text" placeholder="0.00">
     </p>
     <p class="control">
       <a class="button is-outlined is-static">
@@ -15,7 +15,7 @@
   <span>Limit Price</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
-      <input class="input is-fullwidth" type="text" placeholder="0.00">
+      <input class="input is-fullwidth" v-model="orderLimitPrice" type="text" placeholder="0.00">
     </p>
     <p class="control">
       <a class="button is-outlined is-static">
@@ -29,7 +29,21 @@
 <script>
 export default {
   name: 'LimitTab',
-  label: 'Limit'
+  label: 'Limit',
+  data() {
+    return {
+      orderAmount: null,
+      orderLimitPrice: null
+    }
+  },
+  watch: {
+    orderAmount: function() {
+      this.$emit('changeOrderAmount', this.orderAmount);
+    },
+    orderLimitPrice: function() {
+      this.$emit('changeOrderLimitPrice', this.orderLimitPrice);
+    }
+  }
 }
 </script>
 
