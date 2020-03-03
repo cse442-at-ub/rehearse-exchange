@@ -17,9 +17,13 @@
       </li>
     </ul>
   </div>
-  <component :is="currentTab" @changeOrderAmount="orderAmount = $event" @changeOrderLimitPrice="orderLimitPrice = $event"/>
+  <component :is="currentTab"
+    @changeOrderAmount="orderAmount = $event"
+    @changeOrderLimitPrice="orderLimitPrice = $event"
+    @changeOrderStopPrice="orderStopPrice = $event"
+  />
   <br/>
-  <button id="order-button" class="button is-success is-fullwidth">Place {{orderType}} Order</button>
+  <button id="order-button" class="button is-success is-fullwidth" @click="placeOrder()">Place {{orderType}} Order</button>
 </div>
 </template>
 
@@ -39,6 +43,7 @@ export default {
     return {
       orderType: "Buy",
       currentTab: MarketTab,
+      currentTabName: "Market",
       orderAmount: null,
       orderLimitPrice: null,
       orderStopPrice: null,
@@ -54,6 +59,14 @@ export default {
   methods: {
     changeTab(tab) {
       this.currentTab = tab;
+      this.currentTabName = tab.label;
+      this.orderAmount = null;
+      this.orderLimitPrice = null;
+      this.orderStopPrice = null;
+    },
+    placeOrder() {
+      var orderInfo = [ this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice];
+      this.$emit('placeOrder', orderInfo);
     },
     uiSetSell() {
       document.getElementById("buy-tab").classList.remove("is-active");
