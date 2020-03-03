@@ -10,7 +10,7 @@
     </div>
     <div class="message-header">Order Form</div>
     <div class="tile is-child box message-body" id="order-form">
-      <OrderForm/>
+      <OrderForm @placeOrder="orderInfo = $event"/>
     </div>
   </div>
   <div class="tile is-parent is-vertical is-8">
@@ -79,7 +79,12 @@ export default {
       usdAmount:1000,
       selectedCurrencyGet: "BTC",
       selectedCurrencyGive: "USD",
-
+      orderInfo: []
+    }
+  },
+  watch: {
+    orderInfo: function() {
+      // Handle order here
     }
   }
 }
