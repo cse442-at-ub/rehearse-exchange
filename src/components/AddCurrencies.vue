@@ -44,7 +44,7 @@
           <input class="input is-fullwidth" type="text" placeholder="0.00">
         </p>
         <p class="control">
-          <a class="button is-outlined is-static">
+          <a class="button is-outlined is-clickable">
             <span>Add</span>
           </a>
         </p>
