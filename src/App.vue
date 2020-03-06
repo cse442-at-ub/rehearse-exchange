@@ -20,7 +20,7 @@
     </div>
     <div class="message-header">Order History</div>
     <div class="tile is-child box message-body" id="order-history">
-      <OrderHistory/>
+      <OrderHistory ref="OrderHistory"/>
     </div>
   </div>
 </div>
@@ -79,13 +79,25 @@ export default {
       usdAmount:1000,
       selectedCurrencyGet: "BTC",
       selectedCurrencyGive: "USD",
-      orderInfo: []
+      orderInfo: [],
+      rowData: []
     }
   },
   watch: {
     orderInfo: function() {
-      // Handle order here
+      var newRowData = [];
+      var date = new Date();
+      newRowData.push(this.orderInfo[0]);
+      newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
+      newRowData.push("size");
+      newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
+      newRowData.push(this.orderInfo[2] * 0.005);
+      newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+        + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+      newRowData.push("Unfilled");
+      this.$refs.OrderHistory.addRow(newRowData);
     }
+    
   }
 }
 </script>
