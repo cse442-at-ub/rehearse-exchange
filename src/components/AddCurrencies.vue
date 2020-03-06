@@ -96,7 +96,7 @@ export default {
   },
   data(){
     return{
-        selectedCurrenciesGet: this.$parent.btcAmount,
+        selectedCurrenciesGet: 'btc',
         amountToAdd:0,
     }
   }
