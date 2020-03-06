@@ -4,9 +4,8 @@
     <div class="message-header">Currency Select</div>
     <div class="tile is-child box message-body" id="currency-select">
       <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
-      <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
       <div class="currentCurrency"><CurrentCurrencies/></div>
-
+      <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
     </div>
     <div class="message-header">Order Form</div>
     <div class="tile is-child box message-body" id="order-form">
@@ -71,12 +70,12 @@ export default {
   },
   data(){
     return{
-      btcAmount:1000,
-      ethAmount:200,
-      ltcAmount:0,
-      xrpAmount:1000,
-      linkAmount:1,
-      usdAmount:1000,
+      btcAmount: 0,
+      ethAmount: 0,
+      ltcAmount: 0,
+      xrpAmount: 0,
+      linkAmount: 0,
+      usdAmount: 0,
       selectedCurrencyGet: "BTC",
       selectedCurrencyGive: "USD",
       orderInfo: [],
@@ -103,11 +102,9 @@ export default {
 </script>
 
 <style scoped>
-
 #root {
   top: 0; right: 0; bottom: 0; left: 0;
   margin: 0rem;
-  background-color: #dcdcdc;
   height: 100vh;
 }
 
@@ -116,26 +113,28 @@ export default {
   color: black;
 }
 
-#currency-select {
-  min-height: 12vh;
-  max-height: 12vh;
+#order-form {
+  overflow: auto;
+  min-height: 58vh;
 }
 
 #order-history {
   overflow: auto;
-  height: 20vh;
+  min-height: 20vh;
 }
 
 .currencySelect{
-  display:inline;
+  width: 50%;
   float:left;
+  padding-right: .5rem;
 }
 .currentCurrency{
-  display:inline;
+  width: 50%;
   float:right;
+  padding-left: .5rem;
 }
 .addCurrencies{
-  display:inline;
-  float:center;
+  padding-top: 1.5rem;
+
 }
 </style>
