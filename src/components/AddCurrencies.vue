@@ -44,13 +44,11 @@
           <input class="input is-fullwidth" type="text" placeholder="0.00" v-model= "amountToAdd">
         </p>
         <p class="control">
-          <a class="button is-outlined is-clickable" @click = "addAmount(this.amountToAdd)" >
+          <a class="button is-outlined is-clickable" @click = "addAmount()" >
             <span>Add</span>
           </a>
         </p>
       </div>
-
-        <button class="button" @click = "addAmount(this.amountToAdd)">USD</button>
     </div>
   </div>
 </div>
@@ -66,31 +64,31 @@ export default {
       changeCurrencies(get){
         this.selectedCurrenciesGet = get;
       },
-      addAmount(amountToAdd){
-        window.alert('here');
-       if(!isNaN(amountToAdd)){
+      addAmount(){
+       if(!isNaN(this.amountToAdd)){
           if(this.selectedCurrenciesGet== 'btc'){
-            let pair = ['btc',amountToAdd];
+            window.alert('here');
+            let pair = ['btc',this.amountToAdd];
             this.$emit('changeAmount', pair);
           }
           if(this.selectedCurrenciesGet=='eth'){
-            let pair=['eth',amountToAdd];
+            let pair=['eth',this.amountToAdd];
             this.$emit('changeAmount', pair);
           }
           if(this.selectedCurrenciesGet == 'ltc'){
-            let pair =['ltc',amountToAdd];
+            let pair =['ltc',this.amountToAdd];
             this.$emit('changeAmount',pair);
           }
           if(this.selectedCurrenciesGet=='xrp'){
-            let pair = ['xrp',amountToAdd];
+            let pair = ['xrp',this.amountToAdd];
             this.$emit('changeAmount',pair);
           }
           if(this.selectedCurrenciesGet=='link'){
-            let pair =['link',amountToAdd];
+            let pair =['link',this.amountToAdd];
             this.$emit('changeAmount',pair);
           }
           if(this.selectedCurrenciesGet=='usd'){
-            let pair =['usd',amountToAdd];
+            let pair =['usd',this.amountToAdd];
             this.$emit('changeAmount',pair);
           }
         }
@@ -99,7 +97,7 @@ export default {
   data(){
     return{
         selectedCurrenciesGet: this.$parent.btcAmount,
-        amountToAdd:7,
+        amountToAdd:0,
     }
   }
 }

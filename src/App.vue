@@ -50,22 +50,22 @@ export default {
     },
     addAmount(pair){
         if(pair[0]=='btc'){
-          this.btcAmount = this.btcAmount+pair[1];
+          this.btcAmount = this.btcAmount+parseInt(pair[1]);
         }
         if(pair[0]=='eth'){
-          this.ethAmount=this.ethAmount+pair[1];
+          this.ethAmount=this.ethAmount+parseInt(pair[1]);
         }
         if(pair[0]=='ltc'){
-          this.ltcAmount=this.ltcAmount+pair[1];
+          this.ltcAmount=this.ltcAmount+parseInt(pair[1]);
         }
         if(pair[0]=='xrp'){
-          this.xrpAmount=this.xrpAmount+pair[1];
+          this.xrpAmount=this.xrpAmount+parseInt(pair[1]);
         }
         if(pair[0]=='link'){
-          this.linkAmount=this.linkAmount+pair[1];
+          this.linkAmount=this.linkAmount+parseInt(pair[1]);
         }
         if(pair[0]=='usd'){
-          this.usdAmount=this.usdAmount+pair[1];
+          this.usdAmount=this.usdAmount+parseInt(pair[1]);
         }
     },
   },
