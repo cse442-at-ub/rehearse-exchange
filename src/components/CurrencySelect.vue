@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="select">
+  <div class="select is-fullwidth">
     <select>
       <option @click = "getCurrencies('BTC')">
         <button class="button" >BTC-USD</button>
@@ -43,3 +43,6 @@ export default {
 
 </script>
 
+<style scoped>
+
+</style>

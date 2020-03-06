@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="tabs is-toggle is-fullwidth">
+  <div class="tabs is-toggle is-fullwidth" id="bar1">
     <ul>
       <li id="buy-tab" class="is-active">
         <span><a @click="uiSetBuy">Buy</a></span>
@@ -10,7 +10,7 @@
       </li>
     </ul>
   </div>
-  <div class="tabs is-fullwidth">
+  <div class="tabs is-fullwidth" id="bar2">
     <ul>
       <li v-for="tab in tabComponents" :key="tab.label" :class="{ 'is-active': currentTab === tab }">
         <a @click="changeTab(tab)">{{tab.label}}</a>
@@ -87,4 +87,19 @@ export default {
 </script>
 
 <style scoped>
+
+#bar1 {
+  margin-bottom: .75rem;
+}
+
+#bar2 {
+  margin-top: .75rem;
+  margin-bottom: .75rem;
+}
+
+.field {
+  margin-bottom: 0rem;
+}
+
+
 </style>

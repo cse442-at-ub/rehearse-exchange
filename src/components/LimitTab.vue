@@ -1,6 +1,6 @@
 <template>
 <div>
-  <span>Amount</span>
+  <span class="is-size-7">Amount</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
       <input class="input is-fullwidth" v-model="orderAmount" type="text" placeholder="0.00">
@@ -12,7 +12,7 @@
       </a>
     </p>
   </div>
-  <span>Limit Price</span>
+  <span class="is-size-7">Limit Price</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
       <input class="input is-fullwidth" v-model="orderLimitPrice" type="text" placeholder="0.00">
@@ -48,5 +48,7 @@ export default {
 </script>
 
 <style scoped>
-
+.field {
+  margin-bottom: 0rem;
+}
 </style>
