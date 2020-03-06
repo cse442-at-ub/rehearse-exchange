@@ -4,7 +4,7 @@
     <div class="message-header">Currency Select</div>
     <div class="tile is-child box message-body" id="currency-select">
       <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
-      <div class="addCurrencies"><AddCurrencies/></div>
+      <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
       <div class="currentCurrency"><CurrentCurrencies/></div>
 
     </div>
@@ -47,7 +47,27 @@ export default {
   methods: {
     changeCurrencies(get){
       this.selectedCurrencyGet = get;
-    }
+    },
+    addAmount(pair){
+        if(pair[0]=='btc'){
+          this.btcAmount = this.btcAmount+pair[1];
+        }
+        if(pair[0]=='eth'){
+          this.ethAmount=this.ethAmount+pair[1];
+        }
+        if(pair[0]=='ltc'){
+          this.ltcAmount=this.ltcAmount+pair[1];
+        }
+        if(pair[0]=='xrp'){
+          this.xrpAmount=this.xrpAmount+pair[1];
+        }
+        if(pair[0]=='link'){
+          this.linkAmount=this.linkAmount+pair[1];
+        }
+        if(pair[0]=='usd'){
+          this.usdAmount=this.usdAmount+pair[1];
+        }
+    },
   },
   data(){
     return{
@@ -56,6 +76,7 @@ export default {
       ltcAmount:0,
       xrpAmount:1000,
       linkAmount:1,
+      usdAmount:1000,
       selectedCurrencyGet: "BTC",
       selectedCurrencyGive: "USD",
 
@@ -97,7 +118,7 @@ export default {
   float:right;
 }
 .addCurrencies{
-  display:block;
-  float:right;
+  display:inline;
+  float:center;
 }
 </style>
