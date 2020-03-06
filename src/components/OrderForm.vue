@@ -65,7 +65,7 @@ export default {
       this.orderStopPrice = null;
     },
     placeOrder() {
-      var orderInfo = [ this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice];
+      var orderInfo = [this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice];
       this.$emit('placeOrder', orderInfo);
     },
     uiSetSell() {
