@@ -2,9 +2,9 @@
 
 <div class="dropdown is-hoverable">
 <div class="dropdown-trigger">
-  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+  <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu4">
 
-    <span style="text-align:center;">Wallet</span>
+    <span style="text-align:center;">Portfolio</span>
   </button>
 </div>
 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
@@ -48,4 +48,7 @@ export default {
   text-align:left;
 }
 
+.dropdown, .dropdown-trigger {
+  width: 100%;
+}
 </style>
