@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import CurrencySelect from './components/CurrencySelect.vue'
 import OrderForm from './components/OrderForm.vue'
 import PriceChart from './components/PriceChart.vue'
@@ -43,9 +44,50 @@ export default {
     CurrentCurrencies,
     AddCurrencies,
   },
+  data() {
+    return{
+      btcAmount: 0,
+      ethAmount: 0,
+      ltcAmount: 0,
+      xrpAmount: 0,
+      linkAmount: 0,
+      usdAmount: 0,
+      selectedCurrencyGet: "BTC",
+      selectedCurrencyGive: "USD",
+      orderInfo: [],
+      rowData: [],
+      selectedCurrencyPrice: null,
+      interval: null
+    }
+  },
   methods: {
-    changeCurrencies(get){
-      this.selectedCurrencyGet = get;
+    getPrice() {
+      if (this.selectedCurrencyGive == "USD") {
+        axios
+          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+            this.selectedCurrencyGet +
+            '&tsyms=' +
+            this.selectedCurrencyGive +
+            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .then(response => (this.selectedCurrencyPrice = response.data.USD));
+      } else if (this.selectedCurrencyGive == "BTC") {
+        axios
+          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+            this.selectedCurrencyGet +
+            '&tsyms=' +
+            this.selectedCurrencyGive +
+            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .then(response => (this.selectedCurrencyPrice = response.data.BTC));
+      } else if (this.selectedCurrencyGive == "ETH") {
+        axios
+          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+            this.selectedCurrencyGet +
+            '&tsyms=' +
+            this.selectedCurrencyGive +
+            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .then(response => (this.selectedCurrencyPrice = response.data.ETH));
+      }
+      setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
     },
     addAmount(pair){
         if(pair[0]=='btc'){
@@ -68,20 +110,6 @@ export default {
         }
     },
   },
-  data(){
-    return{
-      btcAmount: 0,
-      ethAmount: 0,
-      ltcAmount: 0,
-      xrpAmount: 0,
-      linkAmount: 0,
-      usdAmount: 0,
-      selectedCurrencyGet: "BTC",
-      selectedCurrencyGive: "USD",
-      orderInfo: [],
-      rowData: []
-    }
-  },
   watch: {
     orderInfo: function() {
       var newRowData = [];
@@ -95,8 +123,13 @@ export default {
         + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
       newRowData.push("Unfilled");
       this.$refs.OrderHistory.addRow(newRowData);
+    },
+    selectedCurrencyGet: function() {
+      this.getPrice();
     }
-    
+  },
+  mounted() {
+    this.interval = setInterval(() => this.getPrice(), 2000);
   }
 }
 </script>
