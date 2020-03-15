@@ -109,9 +109,24 @@ export default {
           this.usdAmount=this.usdAmount+parseInt(pair[1]);
         }
     },
+    checkBuy(){
+      if(this.orderInfo[1]=="Market"){
+          if(this.orderInfo[2]<this.usdAmount){
+              window.alert("Failed to buy, not enough USD");
+              return false;
+          }
+          else{
+            this.usdAmount =this.usdAmount-parseInt(this.orderInfo[2]);
+            window.alert(this.selectedCurrencyGet);
+            this.getPrice()
+
+          }
+      }
+    },
   },
   watch: {
     orderInfo: function() {
+      if(this.checkBuy()){
       var newRowData = [];
       var date = new Date();
       newRowData.push(this.orderInfo[0]);
@@ -123,6 +138,7 @@ export default {
         + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
       newRowData.push("Unfilled");
       this.$refs.OrderHistory.addRow(newRowData);
+    }
     },
     selectedCurrencyGet: function() {
       this.getPrice();
