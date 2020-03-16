@@ -117,9 +117,14 @@ export default {
           }
           else{
             this.usdAmount =this.usdAmount-parseInt(this.orderInfo[2]);
-            window.alert(this.selectedCurrencyGet);
+            var buyAmount = this.orderInfo[2]-(this.orderInfo[2]*0.005);
             this.getPrice()
-
+            if(this.selectedCurrencyGet== 'BTC'){
+              this.btcAmount = this.btcAmount + (buyAmount/this.selectedCurrencyPrice);
+            }
+            if(this.selectedCurrencyGet=='ETH'){
+              this.ethAmount = this.ethAmount +(buyAmount/this.selectedCurrencyPrice);
+            }
           }
       }
     },
