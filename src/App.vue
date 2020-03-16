@@ -111,7 +111,7 @@ export default {
     },
     checkBuy(){
       if(this.orderInfo[1]=="Market"){
-          if(this.orderInfo[2]<this.usdAmount){
+          if(this.orderInfo[2]>this.usdAmount){
               window.alert("Failed to buy, not enough USD");
               return false;
           }
