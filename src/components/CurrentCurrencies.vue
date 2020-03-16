@@ -29,6 +29,10 @@
       <option>
         <h3 class="title is-3">LINK: <p class="walletAmount">{{this.$parent.linkAmount}}</p></h3>
       </option>
+      <hr class="dropdown-divider">
+      <option>
+        <h3 class="title is-3">USD: <p class="walletAmount">{{this.$parent.usdAmount}}</p></h3>
+      </option>
     </div>
   </div>
 </div>
