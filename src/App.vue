@@ -109,9 +109,29 @@ export default {
           this.usdAmount=this.usdAmount+parseInt(pair[1]);
         }
     },
+    checkBuy(){
+      if(this.orderInfo[1]=="Market"){
+          if(this.orderInfo[2]<this.usdAmount){
+              window.alert("Failed to buy, not enough USD");
+              return false;
+          }
+          else{
+            this.usdAmount =this.usdAmount-parseInt(this.orderInfo[2]);
+            var buyAmount = this.orderInfo[2]-(this.orderInfo[2]*0.005);
+            this.getPrice()
+            if(this.selectedCurrencyGet== 'BTC'){
+              this.btcAmount = this.btcAmount + (buyAmount/this.selectedCurrencyPrice);
+            }
+            if(this.selectedCurrencyGet=='ETH'){
+              this.ethAmount = this.ethAmount +(buyAmount/this.selectedCurrencyPrice);
+            }
+          }
+      }
+    },
   },
   watch: {
     orderInfo: function() {
+      if(this.checkBuy()){
       var newRowData = [];
       var date = new Date();
       newRowData.push(this.orderInfo[0]);
@@ -123,6 +143,7 @@ export default {
         + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
       newRowData.push("Unfilled");
       this.$refs.OrderHistory.addRow(newRowData);
+    }
     },
     selectedCurrencyGet: function() {
       this.getPrice();
