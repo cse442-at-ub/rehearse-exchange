@@ -86,6 +86,30 @@ export default {
             this.selectedCurrencyGive +
             '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
           .then(response => (this.selectedCurrencyPrice = response.data.ETH));
+      }else if (this.selectedCurrencyGive == "LTC") {
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        this.selectedCurrencyGet +
+                        '&tsyms=' +
+                        this.selectedCurrencyGive +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.selectedCurrencyPrice = response.data.LTC));
+      }else if (this.selectedCurrencyGive == "XRP") {
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        this.selectedCurrencyGet +
+                        '&tsyms=' +
+                        this.selectedCurrencyGive +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.selectedCurrencyPrice = response.data.XRP));
+      }else if (this.selectedCurrencyGive == "LINK") {
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        this.selectedCurrencyGet +
+                        '&tsyms=' +
+                        this.selectedCurrencyGive +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.selectedCurrencyPrice = response.data.LINK));
       }
       setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
     },
@@ -109,29 +133,81 @@ export default {
           this.usdAmount=this.usdAmount+parseInt(pair[1]);
         }
     },
-    checkBuy(){
-      if(this.orderInfo[1]=="Market"){
-          if(this.orderInfo[2]>this.usdAmount){
-              window.alert("Failed to buy, not enough USD");
-              return false;
+    checkMarketOrder(){
+      if(this.orderInfo[0]=="Buy") {
+        if (this.orderInfo[2] > this.usdAmount) {
+          window.alert("Failed to buy, not enough USD");
+          return false;
+        }
+        else {
+          this.usdAmount = this.usdAmount - parseInt(this.orderInfo[2]);
+          var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
+          this.getPrice()
+          if (this.selectedCurrencyGet == 'BTC') {
+            this.btcAmount = this.btcAmount + (buyAmount / this.selectedCurrencyPrice);
           }
-          else{
-            this.usdAmount =this.usdAmount-parseInt(this.orderInfo[2]);
-            var buyAmount = this.orderInfo[2]-(this.orderInfo[2]*0.005);
-            this.getPrice()
-            if(this.selectedCurrencyGet== 'BTC'){
-              this.btcAmount = this.btcAmount + (buyAmount/this.selectedCurrencyPrice);
-            }
-            if(this.selectedCurrencyGet=='ETH'){
-              this.ethAmount = this.ethAmount +(buyAmount/this.selectedCurrencyPrice);
-            }
+          if (this.selectedCurrencyGet == 'ETH') {
+            this.ethAmount = this.ethAmount + (buyAmount / this.selectedCurrencyPrice);
           }
+          if (this.selectedCurrencyGet == 'LTC') {
+            this.ltcAmount = this.ltcAmount + (buyAmount / this.selectedCurrencyPrice);
+          }
+          if (this.selectedCurrencyGet == 'XRP') {
+            this.xrpAmount = this.xrpAmount + (buyAmount / this.selectedCurrencyPrice);
+          }
+          if (this.selectedCurrencyGet == 'LINK') {
+            this.linkAmount = this.linkAmount + (buyAmount / this.selectedCurrencyPrice);
+          }
+        }
+      }
+      else {
+        var sellAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
+        if (this.selectedCurrencyGet == 'BTC') {
+          if (this.orderInfo[2] > this.btcAmount) {
+            window.alert("Failed to sell, not enough BTC");
+            return false;
+          }
+          this.btcAmount = this.btcAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+        }
+        if (this.selectedCurrencyGet == 'ETH') {
+          if (this.orderInfo[2] > this.ethAmount) {
+            window.alert("Failed to sell, not enough ETH");
+            return false;
+          }
+          this.ethAmount = this.ethAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+        }
+        if (this.selectedCurrencyGet == 'LTC') {
+          if (this.orderInfo[2] > this.ltcAmount) {
+            window.alert("Failed to sell, not enough LTC");
+            return false;
+          }
+          this.ltcAmount = this.ltcAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+        }
+        if (this.selectedCurrencyGet == 'XRP') {
+          if (this.orderInfo[2] > this.xrpAmount) {
+            window.alert("Failed to sell, not enough XRP");
+            return false;
+          }
+          this.xrpAmount = this.xrpAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+        }
+        if (this.selectedCurrencyGet == 'LINK') {
+          if (this.orderInfo[2] > this.linkAmount) {
+            window.alert("Failed to sell, not enough LINK");
+            return false;
+          }
+          this.linkAmount = this.linkAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+        }
       }
     },
   },
   watch: {
     orderInfo: function() {
-      if(this.checkBuy()){
+      if(this.checkMarketOrder()){
       var newRowData = [];
       var date = new Date();
       newRowData.push(this.orderInfo[0]);
