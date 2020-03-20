@@ -42,6 +42,7 @@ export default {
   data() {
     return {
       orderType: "Buy",
+      orderCurrency: "USD",
       currentTab: MarketTab,
       currentTabName: "Market",
       orderAmount: null,
@@ -74,6 +75,7 @@ export default {
       document.getElementById("order-button").classList.remove("is-success");
       document.getElementById("order-button").classList.add("is-danger");
       this.orderType = "Sell";
+      this.orderCurrency = this.$parent.selectedCurrencyGet;
     },
     uiSetBuy() {
       document.getElementById("sell-tab").classList.remove("is-active");
@@ -81,6 +83,7 @@ export default {
       document.getElementById("order-button").classList.remove("is-danger");
       document.getElementById("order-button").classList.add("is-success");
       this.orderType = "Buy";
+      this.orderCurrency = this.$parent.selectedCurrencyGive;
     }
   }
 }

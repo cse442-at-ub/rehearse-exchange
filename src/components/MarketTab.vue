@@ -7,7 +7,7 @@
     </p>
     <p class="control">
       <a class="button is-outlined is-static">
-        <span>USD</span>
+        <span>{{this.$parent.orderCurrency}}</span>
       </a>
     </p>
   </div>
@@ -23,6 +23,7 @@ export default {
       orderAmount: null
     }
   },
+
   watch: {
     orderAmount: function() {
       this.$emit('changeOrderAmount', this.orderAmount);
