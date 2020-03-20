@@ -115,22 +115,22 @@ export default {
     },
     addAmount(pair){
         if(pair[0]=='btc'){
-          this.btcAmount = this.btcAmount+parseInt(pair[1]);
+          this.btcAmount = this.btcAmount+parseFloat(pair[1]);
         }
         if(pair[0]=='eth'){
-          this.ethAmount=this.ethAmount+parseInt(pair[1]);
+          this.ethAmount=this.ethAmount+parseFloat(pair[1]);
         }
         if(pair[0]=='ltc'){
-          this.ltcAmount=this.ltcAmount+parseInt(pair[1]);
+          this.ltcAmount=this.ltcAmount+parseFloat(pair[1]);
         }
         if(pair[0]=='xrp'){
-          this.xrpAmount=this.xrpAmount+parseInt(pair[1]);
+          this.xrpAmount=this.xrpAmount+parseFloat(pair[1]);
         }
         if(pair[0]=='link'){
-          this.linkAmount=this.linkAmount+parseInt(pair[1]);
+          this.linkAmount=this.linkAmount+parseFloat(pair[1]);
         }
         if(pair[0]=='usd'){
-          this.usdAmount=this.usdAmount+parseInt(pair[1]);
+          this.usdAmount=this.usdAmount+parseFloat(pair[1]);
         }
     },
     checkMarketOrder(){
@@ -140,7 +140,7 @@ export default {
           return false;
         }
         else {
-          this.usdAmount = this.usdAmount - parseInt(this.orderInfo[2]);
+          this.usdAmount = this.usdAmount - parseFloat(this.orderInfo[2]);
           var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
           this.getPrice()
           if (this.selectedCurrencyGet == 'BTC') {
@@ -167,7 +167,7 @@ export default {
             window.alert("Failed to sell, not enough BTC");
             return false;
           }
-          this.btcAmount = this.btcAmount - parseInt(this.orderInfo[2]);
+          this.btcAmount = this.btcAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
         }
         if (this.selectedCurrencyGet == 'ETH') {
@@ -175,7 +175,7 @@ export default {
             window.alert("Failed to sell, not enough ETH");
             return false;
           }
-          this.ethAmount = this.ethAmount - parseInt(this.orderInfo[2]);
+          this.ethAmount = this.ethAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
         }
         if (this.selectedCurrencyGet == 'LTC') {
@@ -183,7 +183,7 @@ export default {
             window.alert("Failed to sell, not enough LTC");
             return false;
           }
-          this.ltcAmount = this.ltcAmount - parseInt(this.orderInfo[2]);
+          this.ltcAmount = this.ltcAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
         }
         if (this.selectedCurrencyGet == 'XRP') {
@@ -191,7 +191,7 @@ export default {
             window.alert("Failed to sell, not enough XRP");
             return false;
           }
-          this.xrpAmount = this.xrpAmount - parseInt(this.orderInfo[2]);
+          this.xrpAmount = this.xrpAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
         }
         if (this.selectedCurrencyGet == 'LINK') {
@@ -199,7 +199,7 @@ export default {
             window.alert("Failed to sell, not enough LINK");
             return false;
           }
-          this.linkAmount = this.linkAmount - parseInt(this.orderInfo[2]);
+          this.linkAmount = this.linkAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
         }
       }
