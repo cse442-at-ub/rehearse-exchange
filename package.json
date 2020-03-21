@@ -12,9 +12,7 @@
     "bulma-divider": "^0.2.0",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "express": "^4.17.1",
-    "serve-static": "^1.14.1"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
