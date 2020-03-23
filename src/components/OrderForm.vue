@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="tabs is-toggle is-fullwidth">
+  <div class="tabs is-toggle is-fullwidth" id="bar1">
     <ul>
       <li id="buy-tab" class="is-active">
         <span><a @click="uiSetBuy">Buy</a></span>
@@ -10,16 +10,20 @@
       </li>
     </ul>
   </div>
-  <div class="tabs is-fullwidth">
+  <div class="tabs is-fullwidth" id="bar2">
     <ul>
       <li v-for="tab in tabComponents" :key="tab.label" :class="{ 'is-active': currentTab === tab }">
         <a @click="changeTab(tab)">{{tab.label}}</a>
       </li>
     </ul>
   </div>
-  <component :is="currentTab"/>
+  <component :is="currentTab"
+    @changeOrderAmount="orderAmount = $event"
+    @changeOrderLimitPrice="orderLimitPrice = $event"
+    @changeOrderStopPrice="orderStopPrice = $event"
+  />
   <br/>
-  <button id="order-button" class="button is-success is-fullwidth">Place {{orderType}} Order</button>
+  <button id="order-button" class="button is-success is-fullwidth" @click="placeOrder()">Place {{orderType}} Order</button>
 </div>
 </template>
 
@@ -38,7 +42,12 @@ export default {
   data() {
     return {
       orderType: "Buy",
-      currentTab: MarketTab
+      orderCurrency: "USD",
+      currentTab: MarketTab,
+      currentTabName: "Market",
+      orderAmount: null,
+      orderLimitPrice: null,
+      orderStopPrice: null,
     }
   },
   computed: {
@@ -51,6 +60,14 @@ export default {
   methods: {
     changeTab(tab) {
       this.currentTab = tab;
+      this.currentTabName = tab.label;
+      this.orderAmount = null;
+      this.orderLimitPrice = null;
+      this.orderStopPrice = null;
+    },
+    placeOrder() {
+      var orderInfo = [this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice];
+      this.$emit('placeOrder', orderInfo);
     },
     uiSetSell() {
       document.getElementById("buy-tab").classList.remove("is-active");
@@ -58,6 +75,7 @@ export default {
       document.getElementById("order-button").classList.remove("is-success");
       document.getElementById("order-button").classList.add("is-danger");
       this.orderType = "Sell";
+      this.orderCurrency = this.$parent.selectedCurrencyGet;
     },
     uiSetBuy() {
       document.getElementById("sell-tab").classList.remove("is-active");
@@ -65,10 +83,26 @@ export default {
       document.getElementById("order-button").classList.remove("is-danger");
       document.getElementById("order-button").classList.add("is-success");
       this.orderType = "Buy";
+      this.orderCurrency = this.$parent.selectedCurrencyGive;
     }
   }
 }
 </script>
 
 <style scoped>
+
+#bar1 {
+  margin-bottom: .75rem;
+}
+
+#bar2 {
+  margin-top: .75rem;
+  margin-bottom: .75rem;
+}
+
+.field {
+  margin-bottom: 0rem;
+}
+
+
 </style>

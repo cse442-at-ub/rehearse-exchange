@@ -1,119 +1,7 @@
 <template>
   <div class="table-container is-scrollable">
-    <table class="table is-bordered is-striped is-narrow is-haveable">
-      <thead>
-        <th>Fills</th>
-        <tr>
-          <th><abbr title="Type">Type</abbr></th>
-          <th><abbr title="Size">Size</abbr></th>
-          <th><abbr title="Price">Price</abbr></th>
-          <th><abbr title="Fee">Fee</abbr></th>
-          <th><abbr title="Time">Time</abbr></th>
-          <th><abbr title="Status">Status</abbr></th>
-          <th><abbr title="Delete"></abbr></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>1m</td>
-          <td>Unfilled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Sell</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-
-        <tr>
-          <th>Buy</th>
-          <td>50.000000000</td>
-          <td>100.00</td>
-          <td>.55624</td>
-          <td>5h</td>
-          <td>Filled</td>
-          <td><button>x</button></td>
-        </tr>
-      </tbody>
+    <p id="order-placeholder">No orders to display</p>
+    <table class="table is-bordered is-striped is-narrow is-haveable" id="order-table">
     </table>
   </div>
   
@@ -122,8 +10,43 @@
 <script>
 export default {
   name: 'OrderHistory',
-  props: {
-
+  data() {
+    return {
+      hasOrders: false
+    }
+  },
+  methods: {
+    addRow(newRowData) {
+      var table = document.getElementById("order-table");
+      var row;
+      if (this.hasOrders) {
+        row = table.insertRow(1);
+      } else {
+        row = table.insertRow(0);
+      }
+      for (var i = 0; i < 7; i++) {
+        var cell = row.insertCell(i);
+        if (newRowData[i] == "Buy") {
+          cell.innerHTML = "<font color='green'>" + newRowData[i]; + "</font>";
+        } else if (newRowData[i] == "Sell") {
+          cell.innerHTML = "<font color='red'>" + newRowData[i]; + "</font>";
+        } else {
+          cell.innerHTML = newRowData[i];
+        }
+      }
+      if (!this.hasOrders) {
+        var placeholder = document.getElementById("order-placeholder");
+        placeholder.parentNode.removeChild(placeholder);
+        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status"];
+        var header = table.createTHead();
+        var headerRow = header.insertRow(-1);
+        for (var j = 0; j < 7; j++) {
+          var headerCell = headerRow.insertCell(j);
+          headerCell.innerHTML = "<b>" + headerTitles[j] + "</b>";
+        }
+        this.hasOrders = true;
+      }
+    }
   }
 }
 </script>
@@ -138,6 +61,10 @@ export default {
 
 .table {
   width: 99%;
+}
+
+#order-placeholder {
+  text-align: center;
 }
 
 </style>
