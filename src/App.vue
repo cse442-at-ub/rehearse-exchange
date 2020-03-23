@@ -158,6 +158,7 @@ export default {
           if (this.selectedCurrencyGet == 'LINK') {
             this.linkAmount = this.linkAmount + (buyAmount / this.selectedCurrencyPrice);
           }
+          return true;
         }
       }
       else {
@@ -169,6 +170,7 @@ export default {
           }
           this.btcAmount = this.btcAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          return true;
         }
         if (this.selectedCurrencyGet == 'ETH') {
           if (this.orderInfo[2] > this.ethAmount) {
@@ -177,6 +179,7 @@ export default {
           }
           this.ethAmount = this.ethAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          return true;
         }
         if (this.selectedCurrencyGet == 'LTC') {
           if (this.orderInfo[2] > this.ltcAmount) {
@@ -185,6 +188,7 @@ export default {
           }
           this.ltcAmount = this.ltcAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          return true;
         }
         if (this.selectedCurrencyGet == 'XRP') {
           if (this.orderInfo[2] > this.xrpAmount) {
@@ -193,6 +197,7 @@ export default {
           }
           this.xrpAmount = this.xrpAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          return true;
         }
         if (this.selectedCurrencyGet == 'LINK') {
           if (this.orderInfo[2] > this.linkAmount) {
@@ -201,6 +206,7 @@ export default {
           }
           this.linkAmount = this.linkAmount - parseFloat(this.orderInfo[2]);
           this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          return true;
         }
       }
     },
@@ -217,7 +223,7 @@ export default {
       newRowData.push(this.orderInfo[2] * 0.005);
       newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
         + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-      newRowData.push("Unfilled");
+      newRowData.push("Filled");
       this.$refs.OrderHistory.addRow(newRowData);
     }
     },
