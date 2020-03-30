@@ -219,7 +219,7 @@ export default {
         return false;
       }
       else {
-        while(this.orderInfo[1]=="Limit"){
+        while(this.getPrice()!= this.orderInfo[3]){
         this.usdAmount = this.usdAmount - parseFloat(this.orderInfo[2]);
         var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
         this.getPrice()
@@ -298,7 +298,7 @@ export default {
         return false;
       }
       else {
-        while(this.orderInfo[1]=="Stop"){
+        while(this.getPrice()!= this.orderInfo[4]){
         this.usdAmount = this.usdAmount - parseFloat(this.orderInfo[2]);
         var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
         this.getPrice()
