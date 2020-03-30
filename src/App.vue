@@ -57,7 +57,8 @@ export default {
       orderInfo: [],
       rowData: [],
       selectedCurrencyPrice: null,
-      interval: null
+      interval: null,
+      ordersArray: []
     }
   },
   methods: {
@@ -213,19 +214,30 @@ export default {
   },
   watch: {
     orderInfo: function() {
-      if(this.checkMarketOrder()){
-      var newRowData = [];
-      var date = new Date();
-      newRowData.push(this.orderInfo[0]);
-      newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-      newRowData.push("size");
-      newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
-      newRowData.push(this.orderInfo[2] * 0.005);
-      newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
-        + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-      newRowData.push("Filled");
-      this.$refs.OrderHistory.addRow(newRowData);
-    }
+      var check;
+      if (this.orderInfo[1] == "Market") {
+        check = this.checkMarketOrder();
+      } else if (this.orderInfo[1] == "Limit") {
+        check = this.checkLimitOrder();
+      } else if (this.orderInfo[1] == "Stop") {
+        check = this.checkStopOrder();
+      }
+      if (check) {
+        if (this.orderInfo[1] != "Market") {
+          this.ordersArray.push(this.orderInfo);
+        }
+        var newRowData = [];
+        var date = new Date();
+        newRowData.push(this.orderInfo[0]);
+        newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
+        newRowData.push("size");
+        newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
+        newRowData.push(this.orderInfo[2] * 0.005);
+        newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+          + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        newRowData.push("Filled");
+        this.$refs.OrderHistory.addRow(newRowData);
+      }
     },
     selectedCurrencyGet: function() {
       this.getPrice();
