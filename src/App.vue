@@ -137,7 +137,7 @@ export default {
     },
     executeOrder(){
         var order;
-        
+
           for (order of this.ordersArray){
 
                 if(order[4]!=null){        //if Stop order
@@ -220,6 +220,7 @@ export default {
                     }
                 }
             }
+
 
           }
     },
