@@ -65,52 +65,28 @@ export default {
     getPrice() {
       if (this.selectedCurrencyGive == "USD") {
         axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .get('localhost:8080/btc-usd')
           .then(response => (this.selectedCurrencyPrice = response.data.USD));
       } else if (this.selectedCurrencyGive == "BTC") {
         axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .get('localhost:8080/btc-usd')
           .then(response => (this.selectedCurrencyPrice = response.data.BTC));
       } else if (this.selectedCurrencyGive == "ETH") {
         axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .get('localhost:8080/eth-usd')
           .then(response => (this.selectedCurrencyPrice = response.data.ETH));
       }else if (this.selectedCurrencyGive == "LTC") {
         axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LTC));
+          .get('localhost:8080/ltc-usd')
+          .then(response => (this.selectedCurrencyPrice = response.data.LTC));
       }else if (this.selectedCurrencyGive == "XRP") {
         axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.XRP));
+          .get('localhost:8080/xrp-usd')
+          .then(response => (this.selectedCurrencyPrice = response.data.XRP));
       }else if (this.selectedCurrencyGive == "LINK") {
         axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LINK));
+          .get('localhost:8080/link-usd')
+          .then(response => (this.selectedCurrencyPrice = response.data.LINK));
       }
       setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
     },
