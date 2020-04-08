@@ -57,38 +57,25 @@ export default {
       orderInfo: [],
       rowData: [],
       selectedCurrencyPrice: null,
-      interval: null,
-      ordersArray: []
+      ordersArray: [],
+      currentBTC: 0,
+      currentETH: 0,
+      currentLTC: 0,
+      currentXRP: 0,
+      currentLINK: 0,
     }
   },
   methods: {
     getPrice() {
-      if (this.selectedCurrencyGive == "USD") {
-        axios
-          .get('localhost:8080/btc-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.USD));
-      } else if (this.selectedCurrencyGive == "BTC") {
-        axios
-          .get('localhost:8080/btc-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.BTC));
-      } else if (this.selectedCurrencyGive == "ETH") {
-        axios
-          .get('localhost:8080/eth-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.ETH));
-      }else if (this.selectedCurrencyGive == "LTC") {
-        axios
-          .get('localhost:8080/ltc-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.LTC));
-      }else if (this.selectedCurrencyGive == "XRP") {
-        axios
-          .get('localhost:8080/xrp-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.XRP));
-      }else if (this.selectedCurrencyGive == "LINK") {
-        axios
-          .get('localhost:8080/link-usd')
-          .then(response => (this.selectedCurrencyPrice = response.data.LINK));
-      }
-      setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
+      axios
+        .get('http://localhost:8080/api-data')
+        .then(response => (
+          this.currentBTC = response.data.BTC.USD,
+          this.currentETH = response.data.ETH.USD,
+          this.currentLTC = response.data.LTC.USD,
+          this.currentXRP = response.data.XRP.USD,
+          this.currentLINK = response.data.LINK.USD
+        ));
     },
     addAmount(pair){
         if(pair[0]=='btc'){
@@ -220,7 +207,7 @@ export default {
     }
   },
   mounted() {
-    this.interval = setInterval(() => this.getPrice(), 2000);
+    setInterval(() => this.getPrice(), 5000);
   }
 }
 </script>
