@@ -68,7 +68,7 @@ export default {
   methods: {
     getPrice() {
       axios
-        .get('http://localhost:8080/api-data')
+        .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/api-data')
         .then(response => (
           this.currentBTC = response.data.BTC.USD,
           this.currentETH = response.data.ETH.USD,
