@@ -57,62 +57,25 @@ export default {
       orderInfo: [],
       rowData: [],
       selectedCurrencyPrice: null,
-      interval: null,
-      ordersArray: []
+      ordersArray: [],
+      currentBTC: 0,
+      currentETH: 0,
+      currentLTC: 0,
+      currentXRP: 0,
+      currentLINK: 0,
     }
   },
   methods: {
     getPrice() {
-      if (this.selectedCurrencyGive == "USD") {
-        axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-          .then(response => (this.selectedCurrencyPrice = response.data.USD));
-      } else if (this.selectedCurrencyGive == "BTC") {
-        axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-          .then(response => (this.selectedCurrencyPrice = response.data.BTC));
-      } else if (this.selectedCurrencyGive == "ETH") {
-        axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-          .then(response => (this.selectedCurrencyPrice = response.data.ETH));
-      }else if (this.selectedCurrencyGive == "LTC") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LTC));
-      }else if (this.selectedCurrencyGive == "XRP") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.XRP));
-      }else if (this.selectedCurrencyGive == "LINK") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LINK));
-      }
-      setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
+      axios
+        .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/api-data')
+        .then(response => (
+          this.currentBTC = response.data.BTC.USD,
+          this.currentETH = response.data.ETH.USD,
+          this.currentLTC = response.data.LTC.USD,
+          this.currentXRP = response.data.XRP.USD,
+          this.currentLINK = response.data.LINK.USD
+        ));
     },
     addAmount(pair){
         if(pair[0]=='btc'){
@@ -244,7 +207,7 @@ export default {
     }
   },
   mounted() {
-    this.interval = setInterval(() => this.getPrice(), 2000);
+    setInterval(() => this.getPrice(), 5000);
   }
 }
 </script>
