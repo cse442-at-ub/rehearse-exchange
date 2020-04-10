@@ -129,7 +129,7 @@ export default {
 
                 }
                 else{
-                  var sellAmount = order[2] - (order[2] * 0.005);
+                  var sellAmount = order[3] - (order[3] * 0.005);
                   if (order[5] == "BTC") { //if BTC
                     if (order[4] <= this.currentBTC) { //if Stop met
                       if (order[3] <= this.currentBTC) { //if limit met
