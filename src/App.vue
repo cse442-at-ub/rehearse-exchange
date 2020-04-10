@@ -147,7 +147,7 @@ export default {
                         if (order[4] >= this.currentBTC) { //if Stop met
                           if (order[3] >= this.currentBTC) { //if limit met
                             this.btcAmount = this.btcAmount + (buyAmount * this.currentBTC);
-
+                              delete this.ordersArray[0];
                           }
                         }
                       }
@@ -155,7 +155,7 @@ export default {
                         if (order[4] >= this.currentETH) { //if Stop met
                           if (order[3] >= this.currentETH) { //if limit met
                             this.ethAmount = this.ethAmount + (buyAmount * this.currentETH);
-
+                            delete this.ordersArray[0];
                           }
                         }
                       }
@@ -163,7 +163,7 @@ export default {
                         if (order[4] >= this.currentLTC) { //if Stop met
                           if (order[3] >= this.currentLTC) { //if limit met
                             this.ltcAmount = this.ltcAmount + (buyAmount * this.currentLTC);
-
+                            delete this.ordersArray[0];
                           }
                         }
                       }
@@ -171,7 +171,7 @@ export default {
                         if (order[4] >= this.currentXRP) { //if Stop met
                           if (order[3] >= this.currentXRP) { //if limit met
                             this.xrpAmount = this.xrpAmount + (buyAmount * this.currentXRP);
-
+                            delete this.ordersArray[0];
                           }
                         }
                       }
@@ -179,7 +179,7 @@ export default {
                         if (order[4] >= this.currentLink) { //if Stop met
                           if (order[3] >= this.currentLink) { //if limit met
                             this.linkAmount = this.linkAmount + (buyAmount * this.currentLINK);
-
+                            delete this.ordersArray[0];
                           }
                         }
                       }
@@ -191,31 +191,31 @@ export default {
                     if(order[5]=="BTC"){
                       if(order[3]>=this.currentBTC){
                         this.btcAmount = this.btcAmount + (buyAmountLim * this.currentBTC);
-
+                        delete this.ordersArray[0];
                       }
                     }
                     if(order[5]=="ETH"){
                       if(order[3]>=this.currentETH){
                         this.ethAmount = this.ethAmount + (buyAmountLim * this.currentETH);
-
+                        delete this.ordersArray[0];
                       }
                     }
                     if(order[5]=="LTC"){
                       if(this.orderInfo[3]>=this.currentLTC){
                         this.ltcAmount = this.ltcAmount + (buyAmountLim * this.currentLTC);
-
+                        delete this.ordersArray[0];
                       }
                     }
                     if(order[5]=="XRP"){
                       if(this.orderInfo[3]>=this.currentXRP){
                         this.xrpAmount = this.xrpAmount + (buyAmountLim * this.currentXRP);
-
+                        delete this.ordersArray[0];
                       }
                     }
                     if(order[5]=="LINK"){
                       if(order[3]>=this.currentLINK){
                         this.linkAmount = this.linkAmount + (buyAmountLim * this.currentLINK);
-
+                        delete this.ordersArray[0];
                       }
                     }
                 }
