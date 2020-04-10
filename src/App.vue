@@ -64,17 +64,12 @@ export default {
       rowData: [],
       selectedCurrencyPrice: null,
       ordersArray: [],
-      currentBTC: 0,
-      currentETH: 0,
-      currentLTC: 0,
-      currentXRP: 0,
-      currentLINK: 0,
     }
   },
   methods: {
     getPrice() {
       axios
-        .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/api-data')
+        .get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,LINK&tsyms=USD&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
         .then(response => (
           this.currentBTC = response.data.BTC.USD,
           this.currentETH = response.data.ETH.USD,
@@ -82,7 +77,7 @@ export default {
           this.currentXRP = response.data.XRP.USD,
           this.currentLINK = response.data.LINK.USD
         ));
-        
+
           if(this.selectedCurrencyGive=="BTC"){
             this.selectedCurrencyPrice=this.currentBTC;
           }
@@ -114,7 +109,7 @@ export default {
                           if (order[3] >= this.currentBTC) { //if limit met
                             this.btcAmount = this.btcAmount + (buyAmount);
                             if((order[3]-this.currentBTC) !=0){
-                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentBTC));
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentBTC));
                             }
                             delete this.ordersArray[0];
                           }
@@ -125,7 +120,7 @@ export default {
                           if (order[3] >= this.currentETH) { //if limit met
                             this.ethAmount = this.ethAmount + (buyAmount);
                             if((order[3]-this.currentETH) !=0){
-                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentETH));
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentETH));
                             }
                             delete this.ordersArray[0];
                           }
@@ -136,7 +131,7 @@ export default {
                           if (order[3] >= this.currentLTC) { //if limit met
                             this.ltcAmount = this.ltcAmount + (buyAmount);
                             if((order[3]-this.currentLTC) !=0){
-                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLTC));
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLTC));
                           }
                             delete this.ordersArray[0];
                           }
@@ -147,7 +142,7 @@ export default {
                           if (order[3] >= this.currentXRP) { //if limit met
                             this.xrpAmount = this.xrpAmount + (buyAmount);
                             if((order[3]-this.currentXRP) !=0){
-                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentXRP));
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentXRP));
                           }
                             delete this.ordersArray[0];
                           }
@@ -158,15 +153,12 @@ export default {
                           if (order[3] >= this.currentLink) { //if limit met
                             this.linkAmount = this.linkAmount + (buyAmount);
                             if((order[3]-this.currentLINK) !=0){
-                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLINK));
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLINK));
                           }
                             delete this.ordersArray[0];
                           }
                         }
                       }
-                    }
-                    else{
-
                     }
                 }
                 else{
@@ -177,7 +169,7 @@ export default {
                       if(order[3]>=this.currentBTC){
                         this.btcAmount = this.btcAmount + (buyAmountLim);
                         if((order[3]-this.currentBTC) !=0){
-                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentBTC));
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentBTC));
                         }
                         delete this.ordersArray[0];
                       }
@@ -186,7 +178,7 @@ export default {
                       if(order[3]>=this.currentETH){
                         this.ethAmount = this.ethAmount + (buyAmountLim);
                         if((order[3]-this.currentETH) !=0){
-                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentETH));
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentETH));
                         }
                         delete this.ordersArray[0];
                       }
@@ -195,7 +187,7 @@ export default {
                       if(this.orderInfo[3]>=this.currentLTC){
                         this.ltcAmount = this.ltcAmount + (buyAmountLim);
                         if((order[3]-this.currentLTC) !=0){
-                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLTC));
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLTC));
                       }
                         delete this.ordersArray[0];
                       }
@@ -204,7 +196,7 @@ export default {
                       if(this.orderInfo[3]>=this.currentXRP){
                         this.xrpAmount = this.xrpAmount + (buyAmountLim);
                         if((order[3]-this.currentXRP) !=0){
-                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentXRP));
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentXRP));
                       }
                         delete this.ordersArray[0];
                       }
@@ -213,14 +205,11 @@ export default {
                       if(order[3]>=this.currentLINK){
                         this.linkAmount = this.linkAmount + (buyAmountLim);
                         if((order[3]-this.currentLINK) !=0){
-                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLINK));
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLINK));
                       }
                         delete this.ordersArray[0];
                       }
                     }
-                }
-                else{
-
                 }
             }
 
@@ -258,19 +247,19 @@ export default {
           var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
           this.getPrice()
           if (this.selectedCurrencyGet == 'BTC') {
-            this.btcAmount = this.btcAmount + (buyAmount / this.selectedCurrencyPrice);
+            this.btcAmount = this.btcAmount + (buyAmount / this.currentBTC);
           }
           if (this.selectedCurrencyGet == 'ETH') {
-            this.ethAmount = this.ethAmount + (buyAmount / this.selectedCurrencyPrice);
+            this.ethAmount = this.ethAmount + (buyAmount / this.currentETH);
           }
           if (this.selectedCurrencyGet == 'LTC') {
-            this.ltcAmount = this.ltcAmount + (buyAmount / this.selectedCurrencyPrice);
+            this.ltcAmount = this.ltcAmount + (buyAmount / this.currentLTC);
           }
           if (this.selectedCurrencyGet == 'XRP') {
-            this.xrpAmount = this.xrpAmount + (buyAmount / this.selectedCurrencyPrice);
+            this.xrpAmount = this.xrpAmount + (buyAmount / this.currentXRP);
           }
           if (this.selectedCurrencyGet == 'LINK') {
-            this.linkAmount = this.linkAmount + (buyAmount / this.selectedCurrencyPrice);
+            this.linkAmount = this.linkAmount + (buyAmount / this.currentLINK);
           }
           return true;
         }
@@ -283,7 +272,7 @@ export default {
             return false;
           }
           this.btcAmount = this.btcAmount - parseFloat(this.orderInfo[2]);
-          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          this.usdAmount = this.usdAmount + (sellAmount * this.currentBTC);
           return true;
         }
         if (this.selectedCurrencyGet == 'ETH') {
@@ -292,7 +281,7 @@ export default {
             return false;
           }
           this.ethAmount = this.ethAmount - parseFloat(this.orderInfo[2]);
-          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          this.usdAmount = this.usdAmount + (sellAmount * this.currentETH);
           return true;
         }
         if (this.selectedCurrencyGet == 'LTC') {
@@ -301,7 +290,7 @@ export default {
             return false;
           }
           this.ltcAmount = this.ltcAmount - parseFloat(this.orderInfo[2]);
-          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          this.usdAmount = this.usdAmount + (sellAmount * this.currentLTC);
           return true;
         }
         if (this.selectedCurrencyGet == 'XRP') {
@@ -310,7 +299,7 @@ export default {
             return false;
           }
           this.xrpAmount = this.xrpAmount - parseFloat(this.orderInfo[2]);
-          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          this.usdAmount = this.usdAmount + (sellAmount * this.currentXRP);
           return true;
         }
         if (this.selectedCurrencyGet == 'LINK') {
@@ -319,7 +308,7 @@ export default {
             return false;
           }
           this.linkAmount = this.linkAmount - parseFloat(this.orderInfo[2]);
-          this.usdAmount = this.usdAmount + (sellAmount * this.selectedCurrencyPrice);
+          this.usdAmount = this.usdAmount + (sellAmount * this.currentLINK);
           return true;
         }
       }
@@ -375,15 +364,15 @@ export default {
     selectedCurrencyGet: function() {
       this.getPrice();
 
-  },
-  mounted() {
-<<<<<<< HEAD
-    this.interval = setInterval(() => this.getPrice(), 10000);
-=======
+  }
+},
+  mounted(){
+
     setInterval(() => this.getPrice(), 5000);
->>>>>>> 71e20b7be205be6d5eb66aa9fe0f7e677411729f
+
   }
 }
+
 </script>
 
 <style scoped>
