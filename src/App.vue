@@ -52,6 +52,12 @@ export default {
       xrpAmount: 0,
       linkAmount: 0,
       usdAmount: 0,
+      currentUSD:0,
+      currentBTC:0,
+      currentETH:0,
+      currentLTC:0,
+      currentXRP:0,
+      currentLINK:0,
       selectedCurrencyGet: "BTC",
       selectedCurrencyGive: "USD",
       orderInfo: [],
@@ -71,48 +77,189 @@ export default {
             this.selectedCurrencyGive +
             '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
           .then(response => (this.selectedCurrencyPrice = response.data.USD));
-      } else if (this.selectedCurrencyGive == "BTC") {
-        axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-          .then(response => (this.selectedCurrencyPrice = response.data.BTC));
-      } else if (this.selectedCurrencyGive == "ETH") {
-        axios
-          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-            this.selectedCurrencyGet +
-            '&tsyms=' +
-            this.selectedCurrencyGive +
-            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-          .then(response => (this.selectedCurrencyPrice = response.data.ETH));
-      }else if (this.selectedCurrencyGive == "LTC") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LTC));
-      }else if (this.selectedCurrencyGive == "XRP") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.XRP));
-      }else if (this.selectedCurrencyGive == "LINK") {
-        axios
-                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
-                        this.selectedCurrencyGet +
-                        '&tsyms=' +
-                        this.selectedCurrencyGive +
-                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (this.selectedCurrencyPrice = response.data.LINK));
       }
+        axios
+          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+            "USD" +
+            '&tsyms=' +
+            "BTC" +
+            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .then(response => (this.currentBTC = response.data.BTC));
+
+        axios
+          .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+            "USD" +
+            '&tsyms=' +
+            "ETH" +
+            '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+          .then(response => (this.currentETH = response.data.ETH));
+
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        "USD" +
+                        '&tsyms=' +
+                        "LTC" +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.currentLTC = response.data.LTC));
+
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        "USD" +
+                        '&tsyms=' +
+                        "XRP" +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.currentXRP = response.data.XRP));
+
+        axios
+                .get('https://min-api.cryptocompare.com/data/price?fsym=' +
+                        "USD" +
+                        '&tsyms=' +
+                        "LINK" +
+                        '&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .then(response => (this.currentLINK = response.data.LINK));
+          if(this.selectedCurrencyGive=="BTC"){
+            this.selectedCurrencyPrice=this.currentBTC;
+          }
+          else if(this.selectedCurrencyGive=="LTC"){
+            this.selectedCurrenyPrice=this.currentLTC;
+          }
+          else if(this.selectedCurrenyGive=="ETH"){
+            this.selectedCurrencyPrice=this.currentETH;
+          }
+          else if(this.selectedCurrencyGive=="XRP"){
+            this.selectedCurrencyPrice=this.currentXRP;
+          }
+          else{
+            this.selectedCurrenyPrice=this.currentLINK;
+          }
       setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
+      this.executeOrder();
+    },
+    executeOrder(){
+        var order;
+
+          for (order of this.ordersArray){
+
+                if(order[4]!=null){        //if Stop order
+                    if(order[0]=="Buy") {
+                      var buyAmount = order[2] - (order[2] * 0.005);   //if Buy
+                      if (order[5] == "BTC") { //if BTC
+                        if (order[4] >= this.currentBTC) { //if Stop met
+                          if (order[3] >= this.currentBTC) { //if limit met
+                            this.btcAmount = this.btcAmount + (buyAmount);
+                            if((order[3]-this.currentBTC) !=0){
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentBTC));
+                            }
+                            delete this.ordersArray[0];
+                          }
+                        }
+                      }
+                      if (order[5] == "ETH") { //if ETH
+                        if (order[4] >= this.currentETH) { //if Stop met
+                          if (order[3] >= this.currentETH) { //if limit met
+                            this.ethAmount = this.ethAmount + (buyAmount);
+                            if((order[3]-this.currentETH) !=0){
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentETH));
+                            }
+                            delete this.ordersArray[0];
+                          }
+                        }
+                      }
+                      if (order[5] == "LTC") { //if LTC
+                        if (order[4] >= this.currentLTC) { //if Stop met
+                          if (order[3] >= this.currentLTC) { //if limit met
+                            this.ltcAmount = this.ltcAmount + (buyAmount);
+                            if((order[3]-this.currentLTC) !=0){
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLTC));
+                          }
+                            delete this.ordersArray[0];
+                          }
+                        }
+                      }
+                      if (order[5] == "XRP") { //if XRP
+                        if (order[4] >= this.currentXRP) { //if Stop met
+                          if (order[3] >= this.currentXRP) { //if limit met
+                            this.xrpAmount = this.xrpAmount + (buyAmount);
+                            if((order[3]-this.currentXRP) !=0){
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentXRP));
+                          }
+                            delete this.ordersArray[0];
+                          }
+                        }
+                      }
+                      if (order[5] == "LINK") { //if LINK
+                        if (order[4] >= this.currentLink) { //if Stop met
+                          if (order[3] >= this.currentLink) { //if limit met
+                            this.linkAmount = this.linkAmount + (buyAmount);
+                            if((order[3]-this.currentLINK) !=0){
+                            this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLINK));
+                          }
+                            delete this.ordersArray[0];
+                          }
+                        }
+                      }
+                    }
+                    else{
+
+                    }
+                }
+                else{
+                  if(order[0]=="Buy"){
+                    var buyAmountLim = order[2] - (order[2] * 0.005);
+
+                    if(order[5]=="BTC"){
+                      if(order[3]>=this.currentBTC){
+                        this.btcAmount = this.btcAmount + (buyAmountLim);
+                        if((order[3]-this.currentBTC) !=0){
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentBTC));
+                        }
+                        delete this.ordersArray[0];
+                      }
+                    }
+                    if(order[5]=="ETH"){
+                      if(order[3]>=this.currentETH){
+                        this.ethAmount = this.ethAmount + (buyAmountLim);
+                        if((order[3]-this.currentETH) !=0){
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentETH));
+                        }
+                        delete this.ordersArray[0];
+                      }
+                    }
+                    if(order[5]=="LTC"){
+                      if(this.orderInfo[3]>=this.currentLTC){
+                        this.ltcAmount = this.ltcAmount + (buyAmountLim);
+                        if((order[3]-this.currentLTC) !=0){
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLTC));
+                      }
+                        delete this.ordersArray[0];
+                      }
+                    }
+                    if(order[5]=="XRP"){
+                      if(this.orderInfo[3]>=this.currentXRP){
+                        this.xrpAmount = this.xrpAmount + (buyAmountLim);
+                        if((order[3]-this.currentXRP) !=0){
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentXRP));
+                      }
+                        delete this.ordersArray[0];
+                      }
+                    }
+                    if(order[5]=="LINK"){
+                      if(order[3]>=this.currentLINK){
+                        this.linkAmount = this.linkAmount + (buyAmountLim);
+                        if((order[3]-this.currentLINK) !=0){
+                        this.usdAmount = this.usdAmount + order[2] * (order[3]-(1 / this.currentLINK));
+                      }
+                        delete this.ordersArray[0];
+                      }
+                    }
+                }
+                else{
+
+                }
+            }
+
+
+          }
     },
     addAmount(pair){
         if(pair[0]=='btc'){
@@ -211,7 +358,27 @@ export default {
         }
       }
     },
+  checkLimitOrder(){
+    if(this.orderInfo[0]=="Buy") {
+      if (this.orderInfo[3] > this.usdAmount) {
+        window.alert("Failed to buy, not enough USD");
+        return false;
+      }
+      this.usdAmount = this.usdAmount-this.orderInfo[3];
+      return true;
+    }
   },
+  checkStopOrder(){
+    if(this.orderInfo[0]=="Buy") {
+      if (this.orderInfo[3] > this.usdAmount) {
+        window.alert("Failed to buy, not enough USD");
+        return false;
+      }
+        this.usdAmount = this.usdAmount-this.orderInfo[3];
+        return true;
+      }
+  },
+},
   watch: {
     orderInfo: function() {
       var check;
@@ -241,10 +408,10 @@ export default {
     },
     selectedCurrencyGet: function() {
       this.getPrice();
-    }
+
   },
   mounted() {
-    this.interval = setInterval(() => this.getPrice(), 2000);
+    this.interval = setInterval(() => this.getPrice(), 10000);
   }
 }
 </script>
