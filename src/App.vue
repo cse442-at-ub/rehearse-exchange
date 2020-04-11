@@ -19,7 +19,7 @@
     </div>
     <div class="message-header">Order History</div>
     <div class="tile is-child box message-body" id="order-history">
-      <OrderHistory ref="OrderHistory"/>
+      <OrderHistory @cancel="cancelOrder($event)" ref="OrderHistory"/>
     </div>
   </div>
 </div>
@@ -112,6 +112,7 @@ export default {
                             this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentBTC));
                             }
                             delete this.ordersArray[0];
+                            this.ordersArray.shift();
                           }
                         }
                       }
@@ -123,6 +124,7 @@ export default {
                             this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentETH));
                             }
                             delete this.ordersArray[0];
+                            this.ordersArray.shift();
                           }
                         }
                       }
@@ -134,6 +136,7 @@ export default {
                             this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLTC));
                           }
                             delete this.ordersArray[0];
+                            this.ordersArray.shift();
                           }
                         }
                       }
@@ -145,6 +148,7 @@ export default {
                             this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentXRP));
                           }
                             delete this.ordersArray[0];
+                            this.ordersArray.shift();
                           }
                         }
                       }
@@ -156,6 +160,7 @@ export default {
                             this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLINK));
                           }
                             delete this.ordersArray[0];
+                            this.ordersArray.shift();
                           }
                         }
                       }
@@ -172,6 +177,7 @@ export default {
                         this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentBTC));
                         }
                         delete this.ordersArray[0];
+                        this.ordersArray.shift();
                       }
                     }
                     if(order[5]=="ETH"){
@@ -181,6 +187,7 @@ export default {
                         this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentETH));
                         }
                         delete this.ordersArray[0];
+                        this.ordersArray.shift();
                       }
                     }
                     if(order[5]=="LTC"){
@@ -190,6 +197,7 @@ export default {
                         this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLTC));
                       }
                         delete this.ordersArray[0];
+                        this.ordersArray.shift();
                       }
                     }
                     if(order[5]=="XRP"){
@@ -199,6 +207,7 @@ export default {
                         this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentXRP));
                       }
                         delete this.ordersArray[0];
+                        this.ordersArray.shift();
                       }
                     }
                     if(order[5]=="LINK"){
@@ -208,6 +217,7 @@ export default {
                         this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLINK));
                       }
                         delete this.ordersArray[0];
+                        this.ordersArray.shift();
                       }
                     }
                 }
@@ -333,6 +343,36 @@ export default {
         return true;
       }
   },
+  cancelOrder(order){
+    window.alert(order);
+    window.alert(this.ordersArray[order]);
+    if(this.ordersArray[order]!=null){
+
+      var holder=this.ordersArray[order];
+      if(holder[6]=="USD"){
+      this.usdAmount = this.usdAmount + parseFloat(holder[3]);
+      }
+      else if(holder[6]=="BTC"){
+        this.btcAmount = this.btcAmount +parseFloat(holder[3]);
+      }
+      else if(holder[6]=="LTC"){
+        this.ltcAmount = this.ltcAmount +parseFloat(holder[3]);
+      }
+      else if(holder[6]=="XRP"){
+        this.xrpAmount = this.xrpAmount + parseFloat(holder[3]);
+      }
+      else if(holder[6]=="ETH"){
+        this.ethAmount = this.ethAmount + parseFloat(holder[3]);
+      }
+      else if(holder[6]=="LINK"){
+        this.linkAmount = this.linkAmount+parseFloat(holder[3]);
+      }
+      delete this.ordersArray[order];
+      this.ordersArray= this.ordersArray.filter(function(x){
+        return x !== undefined;
+      });
+    }
+  },
 },
   watch: {
     orderInfo: function() {
@@ -350,6 +390,8 @@ export default {
         }
         var newRowData = [];
         var date = new Date();
+
+
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
         newRowData.push("size");
@@ -358,6 +400,7 @@ export default {
         newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
           + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
         newRowData.push("Filled");
+        newRowData.push(this.orderInfo[7]);
         this.$refs.OrderHistory.addRow(newRowData);
       }
     },
