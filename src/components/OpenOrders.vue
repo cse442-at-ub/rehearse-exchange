@@ -9,7 +9,7 @@
       <th><abbr title="Price">Price</abbr></th>
       <th><abbr title="Fee">Fee</abbr></th>
       <th><abbr title="Status">Status</abbr></th>
-      <th><abbr title="Cancel"></abbr></th>
+      <th><abbr title="Cancel">Cancel</abbr></th>
     </tr>
   </thead>
   <tbody>
@@ -104,7 +104,7 @@
     </tr>
   </tbody>
 </table>
-  
+
 </template>
 
 <script>

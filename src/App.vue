@@ -19,7 +19,7 @@
       </div>
       <div class="message-header">Order History</div>
       <div class="tile is-child box message-body" id="order-history">
-        <OrderHistory ref="OrderHistory"/>
+        <OrderHistory @cancel="cancelOrder($event)" ref="OrderHistory"/>
       </div>
     </div>
   </div>
@@ -527,34 +527,70 @@
           }
         }
       },
-    },
-    watch: {
-      orderInfo: function() {
-        var check;
-        if (this.orderInfo[1] == "Market") {
-          check = this.checkMarketOrder();
-        } else if (this.orderInfo[1] == "Limit") {
-          check = this.checkLimitOrder();
-        } else if (this.orderInfo[1] == "Stop") {
-          check = this.checkStopOrder();
-        }
-        if (check) {
-          if (this.orderInfo[1] != "Market") {
-            this.ordersArray.push(this.orderInfo);
+
+  cancelOrder(order){
+    if(this.ordersArray[order]!=null){
+
+      var holder=this.ordersArray[order];
+      if(holder[0]=="Buy"){
+        if(holder[6]=="USD"){
+          this.usdAmount = this.usdAmount + parseFloat(holder[3]);
           }
-          var newRowData = [];
-          var date = new Date();
-          newRowData.push(this.orderInfo[0]);
-          newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-          newRowData.push("size");
-          newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
-          newRowData.push(this.orderInfo[2] * 0.005);
-          newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
-                  + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-          newRowData.push("Filled");
-          this.$refs.OrderHistory.addRow(newRowData);
         }
-      },
+      else{
+      if(holder[5]=="BTC"){
+        this.btcAmount = this.btcAmount +parseFloat(holder[2]);
+      }
+      else if(holder[5]=="LTC"){
+        this.ltcAmount = this.ltcAmount +parseFloat(holder[2]);
+      }
+      else if(holder[5]=="XRP"){
+        this.xrpAmount = this.xrpAmount + parseFloat(holder[2]);
+      }
+      else if(holder[5]=="ETH"){
+        this.ethAmount = this.ethAmount + parseFloat(holder[2]);
+      }
+      else if(holder[5]=="LINK"){
+        this.linkAmount = this.linkAmount+parseFloat(holder[2]);
+      }
+    }
+      delete this.ordersArray[order];
+      this.ordersArray= this.ordersArray.filter(function(x){
+        return x !== undefined;
+      });
+    }
+  },
+},
+  watch: {
+    orderInfo: function() {
+      var check;
+      if (this.orderInfo[1] == "Market") {
+        check = this.checkMarketOrder();
+      } else if (this.orderInfo[1] == "Limit") {
+        check = this.checkLimitOrder();
+      } else if (this.orderInfo[1] == "Stop") {
+        check = this.checkStopOrder();
+      }
+      if (check) {
+        if (this.orderInfo[1] != "Market") {
+          this.ordersArray.push(this.orderInfo);
+        }
+        var newRowData = [];
+        var date = new Date();
+
+
+        newRowData.push(this.orderInfo[0]);
+        newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
+        newRowData.push("size");
+        newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
+        newRowData.push(this.orderInfo[2] * 0.005);
+        newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+          + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        newRowData.push("Filled");
+        newRowData.push(this.orderInfo[7]);
+        this.$refs.OrderHistory.addRow(newRowData);
+      }
+    },
       selectedCurrencyGet: function() {
         this.getPrice();
       }
@@ -563,6 +599,7 @@
       setInterval(() => this.getPrice(), 5000);
     }
   }
+
 </script>
 
 <style scoped>
