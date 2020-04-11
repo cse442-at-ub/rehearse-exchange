@@ -344,8 +344,6 @@ export default {
       }
   },
   cancelOrder(order){
-    window.alert(order);
-    window.alert(this.ordersArray[order]);
     if(this.ordersArray[order]!=null){
 
       var holder=this.ordersArray[order];
