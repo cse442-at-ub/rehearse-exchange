@@ -99,7 +99,6 @@
         for (order of this.ordersArray) {
           if (order[4] != null) {        //if Stop order
             if (order[0] == "Buy") {
-              window.alert("Buy");
               var buyAmount = order[2] - (order[2] * 0.005);   //if Buy
               if (order[5] == "BTC") { //if BTC
                 if (order[4] >= this.currentBTC) { //if Stop met
@@ -109,6 +108,7 @@
                       this.usdAmount = this.usdAmount + order[2] * (order[3] - (this.currentBTC));
                     }
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
@@ -120,6 +120,7 @@
                       this.usdAmount = this.usdAmount + order[2] * (order[3] - (this.currentETH));
                     }
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
@@ -131,6 +132,7 @@
                       this.usdAmount = this.usdAmount + order[2] * (order[3] - (this.currentLTC));
                     }
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
@@ -142,6 +144,7 @@
                       this.usdAmount = this.usdAmount + order[2] * (order[3] - (this.currentXRP));
                     }
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
@@ -153,53 +156,55 @@
                       this.usdAmount = this.usdAmount + order[2] * (order[3] - (this.currentLINK));
                     }
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
             }
             else{                //Stop Loss
-              window.alert("SELL");
               var sellAmount = order[2] - (order[2] * 0.005);
-              if (order[6] == "BTC") { //if BTC
-                // window.alert("STOP");
+              if (order[5] == "BTC") { //if BTC
                 if (order[4] >= this.currentBTC) { //if Stop met
-                  // window.alert("LIMIT");
                   if (order[3] <= this.currentBTC) { //if limit met
-                    // window.alert("EXECUTE");
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentBTC);
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
               if (order[5] == "ETH") { //if ETH
                 if (order[4] >= this.currentETH) { //if Stop met
-                  if (order[3] >= this.currentETH) { //if limit met
+                  if (order[3] <= this.currentETH) { //if limit met
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentETH);
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
-              if (this.orderInfo[5] == "LTC") { //if LTC
+              if (order[5] == "LTC") { //if LTC
                 if (order[4] >= this.currentLTC) { //if Stop met
-                  if (order[3] >= this.currentLTC) { //if limit met
+                  if (order[3] <= this.currentLTC) { //if limit met
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentLTC);
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
               if (order[5] == "XRP") { //if XRP
                 if (order[4] >= this.currentXRP) { //if Stop met
-                  if (order[3] >= this.currentXRP) { //if limit met
+                  if (order[3] <= this.currentXRP) { //if limit met
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentXRP);
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
               if (order[5] == "LINK") { //if LINK
                 if (order[4] >= this.currentLink) { //if Stop met
-                  if (order[3] >= this.currentLink) { //if limit met
+                  if (order[3] <= this.currentLink) { //if limit met
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentLINK);
                     delete this.ordersArray[0];
+                    this.ordersArray.shift();
                   }
                 }
               }
@@ -215,6 +220,7 @@
                     this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentBTC));
                   }
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if(order[5]=="ETH"){
@@ -224,6 +230,7 @@
                     this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentETH));
                   }
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if(order[5]=="LTC"){
@@ -233,6 +240,7 @@
                     this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLTC));
                   }
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if(order[5]=="XRP"){
@@ -242,6 +250,7 @@
                     this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentXRP));
                   }
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if(order[5]=="LINK"){
@@ -251,6 +260,7 @@
                     this.usdAmount = this.usdAmount + order[2] * (order[3]-(this.currentLINK));
                   }
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
             }
@@ -261,30 +271,35 @@
                 if (order[3] <= this.currentBTC) { //if limit met
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentBTC);
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if (order[5] == "ETH") { //if ETH
                 if (order[3] >= this.currentETH) { //if limit met
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentETH);
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if (order[5] == "LTC") { //if LTC
                 if (order[3] >= this.currentLTC) { //if limit met
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentLTC);
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if (order[5] == "XRP") { //if XRP
                 if (order[3] >= this.currentXRP) { //if limit met
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentXRP);
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
               if (order[5] == "LINK") { //if LINK
                 if (order[3] >= this.currentLink) { //if limit met
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentLINK);
                   delete this.ordersArray[0];
+                  this.ordersArray.shift();
                 }
               }
             }
@@ -463,41 +478,41 @@
           this.usdAmount = this.usdAmount-this.orderInfo[3];
           return true;
         }
-        else{
+        else {
           if (this.selectedCurrencyGet == 'BTC') {
             if (this.orderInfo[2] > this.btcAmount) {
               window.alert("Failed to sell, not enough BTC");
               return false;
-            }
-            else{
-              this.checkLimitOrder();
+            } else {
+              this.btcAmount = this.btcAmount - parseFloat(this.orderInfo[2]);
+              return true;
             }
           }
           if (this.selectedCurrencyGet == 'ETH') {
             if (this.orderInfo[2] > this.ethAmount) {
               window.alert("Failed to sell, not enough ETH");
               return false;
-            }
-            else{
-              this.checkLimitOrder();
+            } else {
+              this.ethAmount = this.ethAmount - parseFloat(this.orderInfo[2]);
+              return true;
             }
           }
           if (this.selectedCurrencyGet == 'LTC') {
             if (this.orderInfo[2] > this.ltcAmount) {
               window.alert("Failed to sell, not enough LTC");
               return false;
-            }
-            else{
-              this.checkLimitOrder();
+            } else {
+              this.ltcAmount = this.ltcAmount - parseFloat(this.orderInfo[2]);
+              return true;
             }
           }
           if (this.selectedCurrencyGet == 'XRP') {
             if (this.orderInfo[2] > this.xrpAmount) {
               window.alert("Failed to sell, not enough XRP");
               return false;
-            }
-            else{
-              this.checkLimitOrder();
+            } else {
+              this.xrpAmount = this.xrpAmount - parseFloat(this.orderInfo[2]);
+              return true;
             }
           }
           if (this.selectedCurrencyGet == 'LINK') {
@@ -505,7 +520,8 @@
               window.alert("Failed to sell, not enough LINK");
               return false;
             } else {
-              this.checkLimitOrder();
+              this.linkAmount = this.linkAmount - parseFloat(this.orderInfo[2]);
+              return true;
             }
           }
         }
