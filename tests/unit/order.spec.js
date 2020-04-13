@@ -127,7 +127,7 @@ describe ('Order Tests', () => {
     expect(wrapper.vm.btcAmount).toBe(0);
   });
 
-  // Limit Sell 1 BTC worth $7000 with enough USD. (Limit: $7000)
+  // Limit Sell 1 BTC worth $7000 with enough BTC. (Limit: $6000)
   it ('Limit Sell (valid)', () => {
 
     const wrapper = shallowMount(App, {
@@ -143,6 +143,26 @@ describe ('Order Tests', () => {
     });
 
     expect(wrapper.vm.checkLimitOrder()).toBe(true);
+    expect(wrapper.vm.usdAmount).toBe(0);
+    expect(wrapper.vm.btcAmount).toBe(0);
+  });
+
+  // Limit Sell 1 BTC worth $7000 without enough BTC. (Limit: $6000)
+  it ('Limit Sell (invalid)', () => {
+
+    const wrapper = shallowMount(App, {
+      stubs: {
+        OrderForm: true,
+      }
+    });
+
+    wrapper.setData({
+      btcAmount: 0,
+      currentBTC: 7000,
+      orderInfo: ["Sell","Limit",1,6000,"BTC","USD",0]
+    });
+
+    expect(wrapper.vm.checkLimitOrder()).toBe(false);
     expect(wrapper.vm.usdAmount).toBe(0);
     expect(wrapper.vm.btcAmount).toBe(0);
   });
