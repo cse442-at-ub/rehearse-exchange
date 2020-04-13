@@ -4,7 +4,7 @@
     <table class="table is-bordered is-striped is-narrow is-haveable" id="order-table">
     </table>
   </div>
-  
+
 </template>
 
 <script>
@@ -24,8 +24,21 @@ export default {
       } else {
         row = table.insertRow(0);
       }
-      for (var i = 0; i < 7; i++) {
+      for (var i = 0; i < 8; i++) {
         var cell = row.insertCell(i);
+
+        if(i==7){
+
+          var btn = document.createElement('button');
+          btn.innerText = 'Cancel';
+          btn.outerHTML="";
+          cell.appendChild(btn);
+          btn.addEventListener('click',()=>{
+            this.$emit('cancel',newRowData[7]);
+            btn.disabled=true;
+          });
+          break;
+        }
         if (newRowData[i] == "Buy") {
           cell.innerHTML = "<font color='green'>" + newRowData[i]; + "</font>";
         } else if (newRowData[i] == "Sell") {
@@ -34,17 +47,19 @@ export default {
           cell.innerHTML = newRowData[i];
         }
       }
+
       if (!this.hasOrders) {
         var placeholder = document.getElementById("order-placeholder");
         placeholder.parentNode.removeChild(placeholder);
-        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status"];
+        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status", "Cancel"];
         var header = table.createTHead();
         var headerRow = header.insertRow(-1);
-        for (var j = 0; j < 7; j++) {
+        for (var j = 0; j < 8; j++) {
           var headerCell = headerRow.insertCell(j);
           headerCell.innerHTML = "<b>" + headerTitles[j] + "</b>";
         }
         this.hasOrders = true;
+
       }
     }
   }
