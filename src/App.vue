@@ -61,7 +61,6 @@
         selectedCurrencyGive: "USD",
         orderInfo: [],
         rowData: [],
-        selectedCurrencyPrice: null,
         ordersArray: [],
       }
     },
@@ -76,22 +75,6 @@
                                 this.currentXRP = response.data.XRP.USD,
                                 this.currentLINK = response.data.LINK.USD
                 ));
-        if(this.selectedCurrencyGive=="BTC"){
-          this.selectedCurrencyPrice=this.currentBTC;
-        }
-        else if(this.selectedCurrencyGive=="LTC"){
-          this.selectedCurrenyPrice=this.currentLTC;
-        }
-        else if(this.selectedCurrenyGive=="ETH"){
-          this.selectedCurrencyPrice=this.currentETH;
-        }
-        else if(this.selectedCurrencyGive=="XRP"){
-          this.selectedCurrencyPrice=this.currentXRP;
-        }
-        else{
-          this.selectedCurrenyPrice=this.currentLINK;
-        }
-        setTimeout(() => { window.console.log(this.selectedCurrencyPrice); }, 2000);
         this.executeOrder();
       },
       executeOrder(){
@@ -265,7 +248,6 @@
               }
             }
             else{
-
               sellAmount = order[2] - (order[2] * 0.005);
               if (order[5] == "BTC") { //if BTC
                 if (order[3] <= this.currentBTC) { //if limit met
@@ -328,32 +310,38 @@
       },
       checkMarketOrder(){
         if(this.orderInfo[0]=="Buy") {
-          if (this.orderInfo[2]*this.currentBTC > this.usdAmount) {
+          if (this.orderInfo[2] > this.usdAmount) {
             window.alert("Failed to buy, not enough USD");
             return false;
           }
           else {
-            var buyAmount = this.orderInfo[2] - (this.orderInfo[2] * 0.005);
+            var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
+            var buyAmount;
             this.getPrice()
             if (this.selectedCurrencyGet == 'BTC') {
+              buyAmount = withFee / this.currentBTC;
               this.btcAmount = this.btcAmount + (buyAmount);
-              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2])*this.currentBTC);
+              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2]));
             }
             if (this.selectedCurrencyGet == 'ETH') {
+              buyAmount = withFee / this.currentETH;
               this.ethAmount = this.ethAmount + (buyAmount);
-              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2])*this.currentETH);
+              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2]));
             }
             if (this.selectedCurrencyGet == 'LTC') {
+              buyAmount = withFee / this.currentLTC;
               this.ltcAmount = this.ltcAmount + (buyAmount);
-              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2])*this.currentLTC);
+              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2]));
             }
             if (this.selectedCurrencyGet == 'XRP') {
+              buyAmount = withFee / this.currentXRP;
               this.xrpAmount = this.xrpAmount + (buyAmount);
-              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2])*this.currentXRP);
+              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2]));
             }
             if (this.selectedCurrencyGet == 'LINK') {
+              buyAmount = withFee / this.currentLINK;
               this.linkAmount = this.linkAmount + (buyAmount);
-              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2])*this.currentLINK);
+              this.usdAmount = this.usdAmount - (parseFloat(this.orderInfo[2]));
             }
             return true;
           }
@@ -527,10 +515,8 @@
           }
         }
       },
-
   cancelOrder(order){
     if(this.ordersArray[order]!=null){
-
       var holder=this.ordersArray[order];
       if(holder[0]=="Buy"){
         if(holder[6]=="USD"){
@@ -575,14 +561,29 @@
         if (this.orderInfo[1] != "Market") {
           this.ordersArray.push(this.orderInfo);
         }
+        var price;
+        if (this.selectedCurrencyGet == "BTC"){
+          price = this.currentBTC;
+        }
+        else if (this.selectedCurrencyGet == "LTC"){
+          price = this.currentLTC;
+        }
+        else if( this.selectedCurrenyGet == "ETH"){
+          price = this.currentETH;
+        }
+        else if (this.selectedCurrencyGet == "XRP"){
+          price = this.currentXRP;
+        }
+        else if (this.selectedCurrencyGet == "LINK") {
+          price = this.currentLINK;
+        }
+        var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
         var newRowData = [];
         var date = new Date();
-
-
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-        newRowData.push("size");
-        newRowData.push(this.orderInfo[2] - (this.orderInfo[2] * 0.005));
+        newRowData.push(withFee / price);
+        newRowData.push(withFee);
         newRowData.push(this.orderInfo[2] * 0.005);
         newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
           + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
@@ -599,7 +600,6 @@
       setInterval(() => this.getPrice(), 5000);
     }
   }
-
 </script>
 
 <style scoped>
