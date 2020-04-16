@@ -32,7 +32,7 @@
         </div>
       </div>
     <div id="render-price-chart">
-      <RenderPriceChart style="height: 285px"/>
+      <RenderPriceChart :timeframe="timeframe" style="height: 285px"/>
     </div>
   </div>
 
@@ -46,11 +46,19 @@ export default {
   components: {
     RenderPriceChart
   },
+  props:{
+
+  },
+  data() {
+    return{
+      timeframe: 1
+    }
+  },
   methods:{
     getTime(alpha) {
-      this.$emit('getTime', alpha);
-
-    }
+      this.timeframe = alpha;
+    },
+  }
 }
 </script>
 
