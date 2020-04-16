@@ -31,12 +31,14 @@
                     }
                 )
             },
+
             changeTime(timeframe) {
                 //1 Minutes
                 if (timeframe == 1) {
-                    var today = new Date();
-                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                    this.alpha = [time, '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+                    // var date = new Date();
+                    var time = 	new Date(Math.floor(new Date().getTime()/10000.0));
+
+                    this.alpha = [time, time, time, time, '5', '6', '7', '8', '9', '10', '11', '12'];
                     this.makeChart();
                 }
                 //5 Minutes
