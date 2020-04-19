@@ -57,6 +57,8 @@ export default {
   methods:{
     getTime(alpha) {
       this.timeframe = alpha;
+      // this.timeframe = RenderPriceChart.data().alpha;
+      // this.timeframe = RenderPriceChart.methods.changeTime(alpha);
     },
   }
 }
