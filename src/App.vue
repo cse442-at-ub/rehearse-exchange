@@ -15,7 +15,7 @@
     <div class="tile is-parent is-vertical is-8">
       <div class="message-header">Price Chart</div>
       <div class="tile is-child box message-body" id="price-chart">
-        <PriceChart/>
+        <PriceChart :selectedCurrencyGet="selectedCurrencyGet"/>
       </div>
       <div class="message-header">Order History</div>
       <div class="tile is-child box message-body" id="order-history">

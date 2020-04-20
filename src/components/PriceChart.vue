@@ -31,7 +31,7 @@
         </div>
       </div>
     <div id="render-price-chart">
-      <RenderPriceChart :timeframe="timeframe" style="height: 285px"/>
+      <RenderPriceChart :timeframe="timeframe" :selectedCurrencyGet="selectedCurrencyGet" style="height: 285px"/>
     </div>
   </div>
 
@@ -44,8 +44,7 @@ export default {
   components: {
     RenderPriceChart
   },
-  props:{
-  },
+  props: ['selectedCurrencyGet'],
   data() {
     return{
       timeframe: 1
