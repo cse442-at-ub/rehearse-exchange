@@ -1,16 +1,31 @@
-;<script>
+<script>
+    import axios from 'axios'
     import { Line } from 'vue-chartjs'
-
-
     export default {
         data() {
             return {
-                alpha: this.changeTime(1)
+                minutes: [[]],
+                hours: [[]],
+                days: [[]],
+                display: [[]],
+                alpha: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
             }
         },
-        props: ['timeframe'],
+        props: ['timeframe', 'selectedCurrencyGet'],
         methods: {
             makeChart() {
+                var displayCurrency;
+                if (this.$parent.$parent.selectedCurrencyGet == "BTC") {
+                    displayCurrency = this.display[0];
+                } else if (this.$parent.$parent.selectedCurrencyGet == "LTC") {
+                    displayCurrency = this.display[1];
+                } else if (this.$parent.$parent.selectedCurrencyGet == "ETH") {
+                    displayCurrency = this.display[2];
+                } else if (this.$parent.$parent.selectedCurrencyGet == "XRP") {
+                    displayCurrency = this.display[3];
+                } else if (this.$parent.$parent.selectedCurrencyGet == "LINK") {
+                    displayCurrency = this.display[4];
+                }
                 this.renderChart({
                         labels: this.alpha,
                         datasets: [{
@@ -19,13 +34,13 @@
                             borderColor: "#55b6f9",
                             pointRadius: 2,
                             label: this.$parent.$parent.selectedCurrencyGet,
-                            data: [1, 5, 2, 5, 5, 10, 12, 13, 15, 11, 17, 20,2,3,4,5,8,20,3,4,5,8,9,0,2,3,4,12,23,2]
+                            data: displayCurrency
                         }]
                     }, {
                         responsive: true,
                         maintainAspectRatio: false
                     }, {
-                        legend: { //hides the legend
+                        legend: {
                             display: false,
                         },
                     }
@@ -52,8 +67,6 @@
                     this.setTime(changedDate.getTime());
                     return this;
                 };
-
-                // var date = new Date();
 
                 var date0 = new Date();
                 var date1 = new Date();
@@ -86,12 +99,8 @@
                 var date28 = new Date();
                 var date29 = new Date();
 
-
-
-
-                //1 Minutes
-                if (timeframe == 1) {
-                    // var date = new Date();
+                if (timeframe == 0) {
+                    this.display = this.minutes;
                     date29.addMinutes((-29)); date28.addMinutes((-28)); date27.addMinutes((-27));
                         date26.addMinutes((-26)); date25.addMinutes((-25)); date24.addMinutes((-24));
                         date23.addMinutes((-23)); date22.addMinutes((-22)); date21.addMinutes((-21));
@@ -110,29 +119,13 @@
                       this.hourFormat(date20),this.hourFormat(date19),this.hourFormat(date18),this.hourFormat(date17),
                       this.hourFormat(date16),this.hourFormat(date15),this.hourFormat(date14),this.hourFormat(date13),
                       this.hourFormat(date12),this.hourFormat(date11), this.hourFormat(date10), this.hourFormat(date9),
-                        this.hourFormat(date8), this.hourFormat(date7), this.hourFormat(date6),
-                          this.hourFormat(date5), this.hourFormat(date4), this.hourFormat(date3),
-                          this.hourFormat(date2), this.hourFormat(date1),this.hourFormat(date0)];
+                      this.hourFormat(date8), this.hourFormat(date7), this.hourFormat(date6),
+                      this.hourFormat(date5), this.hourFormat(date4), this.hourFormat(date3),
+                      this.hourFormat(date2), this.hourFormat(date1),this.hourFormat(date0)];
                     this.makeChart();
                 }
-                // //5 Minutes
-                // else if (timeframe == 2) {
-                //     this.alpha = [date11.addMinutes((-11*5)), date10.addMinutes((-10*5)), date9.addMinutes((-9*5)),
-                //         date8.addMinutes((-8*5)), date7.addMinutes((-7*5)), date6.addMinutes((-6*5)),
-                //         date5.addMinutes((-5*5)), date4.addMinutes((-4*5)), date3.addMinutes((-3*5)),
-                //         date2.addMinutes((-2*5)), date1.addMinutes((-1*5)), date0.addMinutes((-0))];
-                //     this.makeChart();
-                // }
-                // //15 Minutes
-                // else if (timeframe == 3) {
-                //     this.alpha = [date11.addMinutes((-11*15)), date10.addMinutes((-10*15)), date9.addMinutes((-9*15)),
-                //         date8.addMinutes((-8*15)), date7.addMinutes((-7*15)), date6.addMinutes((-6*15)),
-                //         date5.addMinutes((-5*15)), date4.addMinutes((-4*15)), date3.addMinutes((-3*15)),
-                //         date2.addMinutes((-2*15)), date1.addMinutes((-1*15)), date0.addMinutes((-0))];
-                //     this.makeChart();
-                // }
-                //1 Hours
-                else if (timeframe == 4) {
+                else if (timeframe == 1) {
+                  this.display = this.hours;
                   date29.addHours((-29)); date28.addHours((-28)); date27.addHours((-27));
                       date26.addHours((-26)); date25.addHours((-25)); date24.addHours((-24));
                       date23.addHours((-23)); date22.addHours((-22)); date21.addHours((-21));
@@ -148,21 +141,13 @@
                       this.hourFormat(date20),this.hourFormat(date19),this.hourFormat(date18),this.hourFormat(date17),
                       this.hourFormat(date16),this.hourFormat(date15),this.hourFormat(date14),this.hourFormat(date13),
                       this.hourFormat(date12),this.hourFormat(date11), this.hourFormat(date10), this.hourFormat(date9),
-                        this.hourFormat(date8), this.hourFormat(date7), this.hourFormat(date6),
-                          this.hourFormat(date5), this.hourFormat(date4), this.hourFormat(date3),
-                          this.hourFormat(date2), this.hourFormat(date1),this.hourFormat(date0)];
+                      this.hourFormat(date8), this.hourFormat(date7), this.hourFormat(date6),
+                      this.hourFormat(date5), this.hourFormat(date4), this.hourFormat(date3),
+                      this.hourFormat(date2), this.hourFormat(date1),this.hourFormat(date0)];
                     this.makeChart();
                 }
-                // //6 Hours
-                // else if (timeframe == 5) {
-                //     this.alpha = [date11.addHours((-11*6)), date10.addHours((-10*6)), date9.addHours((-9*6)),
-                //         date8.addHours((-8*6)), date7.addHours((-7*6)), date6.addHours((-6*6)),
-                //         date5.addHours((-5*6)), date4.addHours((-4*6)), date3.addHours((-3*6)),
-                //         date2.addHours((-2*6)), date1.addHours((-1*6)), date0.addHours((-0*6))];
-                //     this.makeChart();
-                // }
-                //1 Days
-                else if (timeframe == 6) {
+                else if (timeframe == 2) {
+                  this.display = this.days;
                   date29.addDays((-29)); date28.addDays((-28)); date27.addDays((-27));
                       date26.addDays((-26)); date25.addDays((-25)); date24.addDays((-24));
                       date23.addDays((-23)); date22.addDays((-22)); date21.addDays((-21));
@@ -178,14 +163,10 @@
                       this.dayFormat(date20),this.dayFormat(date19),this.dayFormat(date18),this.dayFormat(date17),
                       this.dayFormat(date16),this.dayFormat(date15),this.dayFormat(date14),this.dayFormat(date13),
                       this.dayFormat(date12),this.dayFormat(date11), this.dayFormat(date10), this.dayFormat(date9),
-                        this.dayFormat(date8), this.dayFormat(date7), this.dayFormat(date6),
-                          this.dayFormat(date5), this.dayFormat(date4), this.dayFormat(date3),
-                          this.dayFormat(date2), this.dayFormat(date1),this.dayFormat(date0)];
+                      this.dayFormat(date8), this.dayFormat(date7), this.dayFormat(date6),
+                      this.dayFormat(date5), this.dayFormat(date4), this.dayFormat(date3),
+                      this.dayFormat(date2), this.dayFormat(date1),this.dayFormat(date0)];
                     this.makeChart();
-                }
-                //Should not be possible
-                else {
-                    window.alert("Invalid Timeframe");
                 }
             },
             hourFormat(date){
@@ -198,22 +179,57 @@
             },
             dayFormat(date){
               return date.getMonth()+1 + '/' + date.getDate().toString();
+            },
+            parseData(minuteData, hourData, dayData) {
+                this.minutes.push([],[],[],[],[]);
+                for (var a = 0; a < minuteData.length; a++) {
+                    this.minutes[0][a] = minuteData[a].BTC.USD;
+                    this.minutes[1][a] = minuteData[a].LTC.USD;
+                    this.minutes[2][a] = minuteData[a].ETH.USD;
+                    this.minutes[3][a] = minuteData[a].XRP.USD;
+                    this.minutes[4][a] = minuteData[a].LINK.USD;
+                }
+                for (var i = 0; i < 5; i++) {
+                    for (var j = 0; j < 30; j++) {
+                        this.hours[i][j] = hourData[i][j].close;
+                    }
+                    this.hours.push([]);
+                }
+                for (var x = 0; x < 5; x++) {
+                    for (var y = 0; y < 30; y++) {
+                        this.days[x][y] = dayData[x][y].close;
+                    }
+                    this.days.push([]);
+                }
+                this.makeChart();
             }
         },
-
         watch: {
             timeframe: function () {
                 this.changeTime(this.timeframe);
-
+            },
+            selectedCurrencyGet: function() {
+                this.makeChart();
             }
         },
         extends: Line,
         mounted() {
-            this.makeChart();
-
+            var minuteData;
+            var hourData;
+            var dayData;
+            axios.all([
+                axios.get('http://localhost:8080/minute-data'),
+                axios.get('http://localhost:8080/hour-data'),
+                axios.get('http://localhost:8080/day-data')
+            ])
+            .then(axios.spread((minuteResponse, hourResponse, dayResponse) => {
+                minuteData = minuteResponse.data,
+                hourData = hourResponse.data,
+                dayData = dayResponse.data
+            }));
+            setTimeout(() => { this.parseData(minuteData, hourData, dayData); }, 2000);
         },
     }
-
 </script>
 
 <style>

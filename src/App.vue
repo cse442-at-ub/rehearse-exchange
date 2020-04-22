@@ -15,7 +15,7 @@
     <div class="tile is-parent is-vertical is-8">
       <div class="message-header">Price Chart</div>
       <div class="tile is-child box message-body" id="price-chart">
-        <PriceChart/>
+        <PriceChart :selectedCurrencyGet="selectedCurrencyGet"/>
       </div>
       <div class="message-header">Order History</div>
       <div class="tile is-child box message-body" id="order-history">
@@ -67,7 +67,7 @@
     methods: {
       getPrice() {
         axios
-                .get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,LINK&tsyms=USD&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
+                .get('http://localhost:8080/current-prices')
                 .then(response => (
                         this.currentBTC = response.data.BTC.USD,
                                 this.currentETH = response.data.ETH.USD,
@@ -597,7 +597,8 @@
       }
     },
     mounted(){
-      setInterval(() => this.getPrice(), 5000);
+      this.getPrice();
+      setInterval(() => this.getPrice(), 60000);
     }
   }
 </script>
