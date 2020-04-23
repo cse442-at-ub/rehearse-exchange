@@ -2,7 +2,6 @@ const express = require('express')
 const serveStatic = require('serve-static')
 const path = require('path')
 const fetch = require('node-fetch');
-const fs = require('./node_modules/fetch-multiple');
 
 const app = express()
 
