@@ -67,14 +67,14 @@
     methods: {
       getPrice() {
         axios
-                .get('http://localhost:8080/current-prices')
-                .then(response => (
-                        this.currentBTC = response.data.BTC.USD,
-                                this.currentETH = response.data.ETH.USD,
-                                this.currentLTC = response.data.LTC.USD,
-                                this.currentXRP = response.data.XRP.USD,
-                                this.currentLINK = response.data.LINK.USD
-                ));
+          .get('http://localhost:8080/current-prices')
+          .then(response => (
+            this.currentBTC = response.data.BTC.USD,
+            this.currentETH = response.data.ETH.USD,
+            this.currentLTC = response.data.LTC.USD,
+            this.currentXRP = response.data.XRP.USD,
+            this.currentLINK = response.data.LINK.USD
+          ));
         this.executeOrder();
       },
       executeOrder(){
