@@ -641,8 +641,8 @@
     height: 100vh;
   }
   .message-header {
-    background-color: #f5f5f5;
-    color: black;
+    background-color: #35475A;
+    color: white;
   }
   #order-form {
     overflow: auto;

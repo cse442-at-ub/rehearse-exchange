@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="select is-fullwidth">
-      <select>
+      <select style="background:#4e5d6c; border-color: #35475a; color:white">
         <option @click = "getCurrencies('BTC')">
           <button class="button" >
             <span>BTC-USD: ${{this.$parent.currentBTC}}</span>
