@@ -1,13 +1,14 @@
 <template>
 <div id="root-currency-select">
-  <div class="is-divider" data-content="Get some currency to start:"></div>
+  <div class="is-divider" data-content="Get some currency to start:" ></div>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
-      <input class="input is-fullwidth" type="text" placeholder="0.00" v-model= "amountToAdd">
+      <input class="input is-fullwidth" type="text" placeholder="0.00" v-model= "amountToAdd"
+             style="background:#4e5d6c; border-color: #35475a; color:white">
     </p>
     <a class="control">
       <div class="select">
-        <select>
+        <select style="background:#4e5d6c; border-color: #35475a; color:white">
           <option @click= "changeCurrencies('btc')">
             <button class="button">BTC</button>
           </option>
@@ -35,8 +36,8 @@
       </div>
     </a>
     <p class="control">
-      <a class="button is-outlined is-clickable" @click = "addAmount()" >
-        <span>Get</span>
+      <a class="button is-outlined is-clickable" style="background:#4e5d6c; border-color: #35475a; color:white" @click = "addAmount()" >
+        <span>Add</span>
       </a>
     </p>
   </div>
@@ -95,7 +96,11 @@ export default {
 @import '../../node_modules/bulma-divider/dist/css/bulma-divider.min.css';
 
 .is-divider {
+  margin-top: 2.1rem;
   margin-bottom: 1rem;
+}
+.is-divider::after {
+  background-color: #2C3F4F;
 }
 
 </style>

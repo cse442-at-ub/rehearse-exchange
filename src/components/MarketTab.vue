@@ -3,11 +3,12 @@
   <span class="is-size-7">Amount</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
-      <input class="input is-fullwidth" v-model="orderAmount" type="text" placeholder="0.00">
+      <input class="input is-fullwidth" v-model="orderAmount" type="text" placeholder="0.00"
+             style="background:#4e5d6c; border-color: #35475a; color:white">
     </p>
     <p class="control">
-      <a class="button is-outlined is-static">
-        <span>{{this.$parent.orderCurrency}}</span>
+      <a class="button is-outlined is-static" style="background:#4e5d6c; border-color: #35475a; color:white">
+        <span style="background:#4e5d6c; border-color:#4e5d6c; color:white">{{this.$parent.orderCurrency}}</span>
       </a>
     </p>
   </div>
@@ -34,6 +35,7 @@ export default {
 
 <style scoped>
 .field {
+
   margin-bottom: 0rem;
 }
 </style>

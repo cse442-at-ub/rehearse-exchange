@@ -3,11 +3,11 @@
 
       <div class="control">
         <div class="select">
-          <select>
+          <select style="background:#4e5d6c; border-color: #35475a; color:white">
             <option @click = "getTime(0)">
               <button class="button">1m</button>
             </option>
-            <hr class="dropdown-divider">
+            <hr class="dropdown-divider" >
             <option @click = "getTime(1)">
               <button class="button">1h</button>
             </option>
