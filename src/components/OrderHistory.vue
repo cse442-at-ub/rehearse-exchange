@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       hasOrders: false
+
     }
   },
   methods: {
@@ -59,7 +60,7 @@ export default {
           headerCell.innerHTML = "<b>" + headerTitles[j] + "</b>";
         }
         this.hasOrders = true;
-
+        this.$emit('passTable', table);
       }
     }
   }
