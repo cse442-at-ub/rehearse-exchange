@@ -64,9 +64,16 @@ getMinute();
 getHour();
 getDay();
 
-setInterval(() => getMinute(), 60000);
-setInterval(() => getHour(), 3600000);
-setInterval(() => getDay(), 86400000);
+setInterval(function() {
+    getMinute();
+    var date = new Date();
+    if (date.getMinutes() == 0) {
+        getHour();
+        if (date.getHours() == 0) {
+            getDay();
+        }
+    }
+}, 60000);
 
 app.get('/current-prices', (req, res) => {
 

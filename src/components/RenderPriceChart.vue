@@ -179,7 +179,7 @@
                     hour = (date.getHours() - 12).toString();
                 }
 
-                if (date.getMinutes < 10) {
+                if (date.getMinutes() < 10) {
                     return hour + ":0" + date.getMinutes().toString();
                 } else {
                     return hour + ":" + date.getMinutes().toString();
@@ -224,7 +224,7 @@
                     this.hours[i][29] = this.minutes[i][minuteData.length - 1];
                     this.hours.push([]);
                 }
-                hourTimestamps.push("hi");
+                hourTimestamps.push("Now");
                 this.hourTimestamps = hourTimestamps;
 
                 var dayTimestamps = [];
@@ -238,7 +238,7 @@
                     this.days[i][29] = this.minutes[i][minuteData.length - 1];
                     this.days.push([]);
                 }
-                dayTimestamps.push("hi");
+                dayTimestamps.push("Now");
                 this.dayTimestamps = dayTimestamps;
 
                 this.changeTime(this.timeframe);
