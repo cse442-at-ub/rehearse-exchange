@@ -71,10 +71,10 @@ export default {
     },
     formatPercentage(percentage) {
       if (percentage < 0) {
-        document.getElementById("percentage").style.color = "red";
+        document.getElementById("percentage").style.color = "hsl(348, 100%, 61%)";
         this.percentage = percentage + "%";
       } else {
-        document.getElementById("percentage").style.color = "green";
+        document.getElementById("percentage").style.color = "hsl(141, 53%, 53%)";
         this.percentage = "+" + percentage + "%";
       }
     },
