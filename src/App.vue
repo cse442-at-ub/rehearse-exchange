@@ -538,16 +538,29 @@
         }
       },
   cancelOrder(order){
+    //window.alert("Before: " + this.ordersArray);
+
     if(this.ordersArray[order]!=null){
       var holder=this.ordersArray[order];
+      window.alert(holder);
       if(holder[0]=="Buy"){
         if(holder[6]=="USD"){
           this.usdAmount = this.usdAmount + parseFloat(holder[3]);
+          if(holder[7]==this.ordersArray.length-1){
+            this.ordersTable.deleteRow(1);
+          }
+          else if(holder[7]==0){
+            this.ordersTable.deleteRow(this.ordersTable.rows.length-1);
+          }
+          else{
+            this.ordersTable.deleteRow(this.ordersTable.rows.length - holder[7]-1);
+            }
           }
         }
       else{
       if(holder[5]=="BTC"){
         this.btcAmount = this.btcAmount +parseFloat(holder[2]);
+        this.ordersTable.deleteRow(holder[7]);
       }
       else if(holder[5]=="LTC"){
         this.ltcAmount = this.ltcAmount +parseFloat(holder[2]);
@@ -562,15 +575,33 @@
         this.linkAmount = this.linkAmount+parseFloat(holder[2]);
       }
     }
+
       delete this.ordersArray[order];
       this.ordersArray= this.ordersArray.filter(function(x){
         return x !== undefined;
       });
+      //window.alert("After: " + this.ordersArray);
+      this.updateOrdersArray();
     }
   },
   updateTable(table, row){
       var currRow= table.rows[row+1].cells;
       currRow[6].innerHTML="Complete";
+  },
+  updateOrdersArray(){
+    if(this.ordersArray.length!=0){
+      var order;
+      var row;
+      var count =0;
+      for(order of this.ordersArray){
+        order[7]=count;
+        count++;
+      }
+      count=0;
+      for(row of this.ordersTable.rows){
+
+      }
+    }
   }
 },
   watch: {
@@ -606,6 +637,7 @@
         var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
         var newRowData = [];
         var date = new Date();
+        this.updateOrdersArray();
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
         newRowData.push(withFee / price);
