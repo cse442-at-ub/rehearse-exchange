@@ -44,28 +44,39 @@
                  this.$emit('getPrice', price.toFixed(2));
                  this.$emit('getPercentage', percentage.toFixed(2));
                 this.renderChart({
-                        labels: this.alpha,
+                        labels: this.alpha ,
                         datasets: [{
                             lineTension: 0,
                             fill: false,
                             borderColor: "#55b6f9",
-                            pointRadius: 2,
+                            pointRadius: 0,
                             data: displayCurrency
                         }]
-                    }, {
+                    },
+                    {
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
                             yAxes: [{
+                                gridLines: {
+                                    display: true ,
+                                    color: '#4E5D6C',
+                                },
                                 position: 'right',
                                 ticks: {
+                                    fontColor: '#d3d3d3',
                                     callback: function(value) {
                                         return '$' + value;
                                     }
                                 }
                             }],
                             xAxes: [{
+                                gridLines: {
+                                    display: true ,
+                                    color: '#4E5D6C'
+                                },
                                 ticks: {
+                                    fontColor: '#d3d3d3',
                                     autoSkip: true,
                                     maxTicksLimit: 15
                                 }

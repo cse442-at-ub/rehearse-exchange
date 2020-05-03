@@ -1,6 +1,7 @@
 <template>
 <div>
-  <span class="is-size-7">Amount</span>
+  <span class="is-size-7" style="color:lightgrey; font-family: 'Roboto', sans-serif;
+                    font-family: 'Lato', sans-serif;">Amount</span>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
       <input class="input is-fullwidth" v-model="orderAmount" type="text" placeholder="0.00"
