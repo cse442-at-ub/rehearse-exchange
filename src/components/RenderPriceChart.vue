@@ -44,12 +44,16 @@
                  this.$emit('getPrice', price.toFixed(2));
                  this.$emit('getPercentage', percentage.toFixed(2));
                 this.renderChart({
+                    //ffa500 orange
+                    //#ffc400 yellow orange
+                    //#ff8c00 dark orange
                         labels: this.alpha ,
                         datasets: [{
                             lineTension: 0,
                             fill: false,
-                            borderColor: "#55b6f9",
+                            borderColor: '#ff8c00',
                             pointRadius: 0,
+                            pointHitRadius: 4,
                             data: displayCurrency
                         }]
                     },

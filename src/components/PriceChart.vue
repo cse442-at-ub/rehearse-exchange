@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div style="border-width: thin; border-color: whitesmoke; color:lightgrey; font-family: 'Roboto', sans-serif;
+    <div style="border-width: 1px; borderColor: #4e5d6c; color:lightgrey; font-family: 'Roboto', sans-serif;
                       font-family: 'Lato', sans-serif;" class="is-divider"  v-bind:data-content="displayTimeframe()">
     </div>
     <div id="render-price-chart">
@@ -149,6 +149,7 @@ export default {
   .displayPrice {
     order: 2;
     width: 30%;
+    color: ora
   }
   .displayCurrency {
     order: 1;

@@ -1,6 +1,6 @@
 <template>
 <div id="root-currency-select">
-  <div class="is-divider" data-content="Get some currency to start:" ></div>
+  <div class="is-divider" style="borderColor: #4e5d6c;" data-content="Get some currency to start:" ></div>
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
       <input class="input is-fullwidth" type="text" placeholder="0.00" v-model= "amountToAdd"
@@ -101,6 +101,7 @@ export default {
 .is-divider {
   margin-top: 2.1rem;
   margin-bottom: 1rem;
+  color: orang
 }
 .is-divider::after {
   background-color: #2C3F4F;
