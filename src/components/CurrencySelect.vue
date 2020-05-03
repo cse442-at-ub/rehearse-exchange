@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="select is-fullwidth">
-      <select style="background:#4e5d6c; border-color: #35475a; color:white">
+      <select style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
+                      font-family: 'Lato', sans-serif;">
         <option @click = "getCurrencies('BTC')">
-          <button class="button" >
+          <button class="button"  >
             <span>BTC-USD: ${{this.$parent.currentBTC}}</span>
           </button>
         </option>
-        <hr class="dropdown-divider">
+        <hr class="dropdown-divider" >
         <option @click = "getCurrencies('ETH')">
           <button class="button" >
             <span>ETH-USD: ${{this.$parent.currentETH}}</span>
@@ -54,5 +55,11 @@
 </script>
 
 <style scoped>
-
+   .select{
+     background-color:#4e5d6c;
+     border-color: #35475a;
+     color:white;
+     font-size: medium;
+     text-align: left;
+  }
 </style>

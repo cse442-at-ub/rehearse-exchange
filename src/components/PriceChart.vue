@@ -24,7 +24,9 @@
         </div>
       </div>
     </div>
-    <div class="is-divider" v-bind:data-content="displayTimeframe()"></div>
+    <div style="border-width: thin; border-color: whitesmoke; color:lightgrey; font-family: 'Roboto', sans-serif;
+                      font-family: 'Lato', sans-serif;" class="is-divider"  v-bind:data-content="displayTimeframe()">
+    </div>
     <div id="render-price-chart">
       <RenderPriceChart :timeframe="timeframe" :selectedCurrencyGet="selectedCurrencyGet" @getPrice="price = $event" @getPercentage="formatPercentage($event)" style="height: 285px"/>
     </div>
@@ -127,6 +129,7 @@ export default {
 </script>
 
 <style scoped>
+
   #top-bar {
     align-items: center;
     width: 100%;
@@ -141,6 +144,7 @@ export default {
     font-size: large;
     margin-left: .1rem;
   }
+
   .displayPrice {
     order: 2;
     width: 30%;
@@ -161,5 +165,9 @@ export default {
   .is-divider {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    background-color: #2C3F4F;
+  }
+  .is-divider::after {
+    background-color: #2C3F4F;
   }
 </style>

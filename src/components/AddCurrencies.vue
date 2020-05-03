@@ -4,11 +4,13 @@
   <div class="field has-addons has-addons-centered">
     <p class="control is-expanded">
       <input class="input is-fullwidth" type="text" placeholder="0.00" v-model= "amountToAdd"
-             style="background:#4e5d6c; border-color: #35475a; color:white">
+             style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
+                      font-family: 'Lato', sans-serif;">
     </p>
     <a class="control">
       <div class="select">
-        <select style="background:#4e5d6c; border-color: #35475a; color:white">
+        <select style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
+                      font-family: 'Lato', sans-serif;">
           <option @click= "changeCurrencies('btc')">
             <button class="button">BTC</button>
           </option>
@@ -36,7 +38,8 @@
       </div>
     </a>
     <p class="control">
-      <a class="button is-outlined is-clickable" style="background:#4e5d6c; border-color: #35475a; color:white" @click = "addAmount()" >
+      <a class="button is-outlined is-clickable" style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
+                      font-family: 'Lato', sans-serif;" @click = "addAmount()" >
         <span>Add</span>
       </a>
     </p>
