@@ -31,6 +31,7 @@ export default {
         if(i==7){
 
           var btn = document.createElement('button');
+          btn.className = "button is-small";
           btn.innerText = 'Cancel';
           btn.outerHTML="";
           cell.appendChild(btn);
@@ -41,9 +42,9 @@ export default {
           break;
         }
         if (newRowData[i] == "Buy") {
-          cell.innerHTML = "<font color='green'>" + newRowData[i]; + "</font>";
+          cell.innerHTML = "<font color='#6CBF65'>" + newRowData[i]; + "</font>";
         } else if (newRowData[i] == "Sell") {
-          cell.innerHTML = "<font color='red'>" + newRowData[i]; + "</font>";
+          cell.innerHTML = "<font color='#D6605A'>" + newRowData[i]; + "</font>";
         } else {
           cell.innerHTML = newRowData[i];
         }
@@ -73,6 +74,14 @@ export default {
   width: 99%;
   overflow: auto;
   max-height: 100%;
+}
+
+.button {
+  background:#4e5d6c;
+  border-color: #35475a;
+  color:lightgrey;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .table {

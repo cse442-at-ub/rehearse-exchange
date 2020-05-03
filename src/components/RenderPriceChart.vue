@@ -43,6 +43,12 @@
                 }
                  this.$emit('getPrice', price.toFixed(2));
                  this.$emit('getPercentage', percentage.toFixed(2));
+                var lineColor;
+                if (percentage >= 0) {
+                    lineColor = "#6CBF65";
+                } else {
+                    lineColor = "#D6605A";
+                }
                 this.renderChart({
                     //ffa500 orange
                     //#ffc400 yellow orange
@@ -51,7 +57,7 @@
                         datasets: [{
                             lineTension: 0,
                             fill: false,
-                            borderColor: '#ff8c00',
+                            borderColor: lineColor,
                             pointRadius: 0,
                             pointHitRadius: 4,
                             data: displayCurrency

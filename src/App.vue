@@ -608,9 +608,9 @@
         var date = new Date();
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-        newRowData.push(withFee / price);
-        newRowData.push(withFee);
-        newRowData.push(this.orderInfo[2] * 0.005);
+        newRowData.push((withFee / price).toFixed(8));
+        newRowData.push((withFee).toFixed(8));
+        newRowData.push((this.orderInfo[2] * 0.005).toFixed(8));
         newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
           + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
           if(this.orderInfo[1]=="Market"){
