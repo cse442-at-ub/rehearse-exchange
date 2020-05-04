@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       hasOrders: false
+
     }
   },
   methods: {
@@ -24,42 +25,43 @@ export default {
       } else {
         row = table.insertRow(0);
       }
-      for (var i = 0; i < 8; i++) {
+      for (var i = 0; i < 7; i++) {
         var cell = row.insertCell(i);
 
-        if(i==7){
+        if (newRowData[i] == "Buy") {
+          cell.innerHTML = "<font color='#6CBF65'>" + newRowData[i]; + "</font>";
+        } else if (newRowData[i] == "Sell") {
+          cell.innerHTML = "<font color='#D6605A'>" + newRowData[i]; + "</font>";
+        } else {
+          cell.innerHTML = newRowData[i];
+        }
 
-          var btn = document.createElement('button');
-          btn.innerText = 'Cancel';
-          btn.outerHTML="";
+        if(i == 6 && newRowData[6] != "Filled"){
+          var btn = document.createElement('a');
+          btn.className = "delete is-medium";
+          btn.style.float = "right";
           cell.appendChild(btn);
           btn.addEventListener('click',()=>{
             this.$emit('cancel',newRowData[7]);
-            btn.disabled=true;
+            row.deleteCell(6);
+            var newCell = row.insertCell(6);
+            newCell.innerHTML = "Cancelled";
           });
-          break;
-        }
-        if (newRowData[i] == "Buy") {
-          cell.innerHTML = "<font color='green'>" + newRowData[i]; + "</font>";
-        } else if (newRowData[i] == "Sell") {
-          cell.innerHTML = "<font color='red'>" + newRowData[i]; + "</font>";
-        } else {
-          cell.innerHTML = newRowData[i];
         }
       }
 
       if (!this.hasOrders) {
         var placeholder = document.getElementById("order-placeholder");
         placeholder.parentNode.removeChild(placeholder);
-        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status", "Cancel"];
+        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status"];
         var header = table.createTHead();
         var headerRow = header.insertRow(-1);
-        for (var j = 0; j < 8; j++) {
+        for (var j = 0; j < 7; j++) {
           var headerCell = headerRow.insertCell(j);
           headerCell.innerHTML = "<b>" + headerTitles[j] + "</b>";
         }
         this.hasOrders = true;
-
+        this.$emit('passTable', table);
       }
     }
   }
@@ -68,14 +70,25 @@ export default {
 
 <style scoped>
 
+td {
+  text-align: center;
+}
+
 .table-container {
-  width: 99%;
   overflow: auto;
   max-height: 100%;
 }
 
+.button {
+  background:#4e5d6c;
+  border-color: #35475a;
+  color:lightgrey;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
+}
+
 .table {
-  width: 99%;
+  width: 100%;
 }
 
 #order-placeholder {

@@ -15,11 +15,11 @@
     <div class="tile is-parent is-vertical is-8">
       <div class="message-header">Price Chart</div>
       <div class="tile is-child box message-body" id="price-chart">
-        <PriceChart/>
+        <PriceChart :selectedCurrencyGet="selectedCurrencyGet"/>
       </div>
       <div class="message-header">Order History</div>
       <div class="tile is-child box message-body" id="order-history">
-        <OrderHistory @cancel="cancelOrder($event)" ref="OrderHistory"/>
+        <OrderHistory @cancel="cancelOrder($event)" @passTable="ordersTable=$event" ref="OrderHistory"/>
       </div>
     </div>
   </div>
@@ -62,19 +62,21 @@
         orderInfo: [],
         rowData: [],
         ordersArray: [],
+        ordersTable: [],
+        canceledOrders:0,
       }
     },
     methods: {
       getPrice() {
         axios
-                .get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,LINK&tsyms=USD&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285')
-                .then(response => (
-                        this.currentBTC = response.data.BTC.USD,
-                                this.currentETH = response.data.ETH.USD,
-                                this.currentLTC = response.data.LTC.USD,
-                                this.currentXRP = response.data.XRP.USD,
-                                this.currentLINK = response.data.LINK.USD
-                ));
+          .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/current-prices')
+          .then(response => (
+            this.currentBTC = response.data.BTC.USD,
+            this.currentETH = response.data.ETH.USD,
+            this.currentLTC = response.data.LTC.USD,
+            this.currentXRP = response.data.XRP.USD,
+            this.currentLINK = response.data.LINK.USD
+          ));
         this.executeOrder();
       },
       executeOrder(){
@@ -92,6 +94,7 @@
                     }
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -104,6 +107,7 @@
                     }
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -116,6 +120,7 @@
                     }
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -128,6 +133,7 @@
                     }
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -140,6 +146,7 @@
                     }
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -152,6 +159,7 @@
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentBTC);
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -161,6 +169,7 @@
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentETH);
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -170,6 +179,7 @@
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentLTC);
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -179,6 +189,7 @@
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentXRP);
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -188,6 +199,7 @@
                     this.usdAmount = this.usdAmount + (sellAmount * this.currentLINK);
                     delete this.ordersArray[0];
                     this.ordersArray.shift();
+                    this.updateTable(this.ordersTable, order[7]);
                   }
                 }
               }
@@ -204,6 +216,8 @@
                   }
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if(order[5]=="ETH"){
@@ -214,6 +228,7 @@
                   }
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if(order[5]=="LTC"){
@@ -224,6 +239,7 @@
                   }
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if(order[5]=="XRP"){
@@ -234,6 +250,7 @@
                   }
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if(order[5]=="LINK"){
@@ -244,6 +261,7 @@
                   }
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
             }
@@ -254,6 +272,7 @@
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentBTC);
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if (order[5] == "ETH") { //if ETH
@@ -261,6 +280,7 @@
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentETH);
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if (order[5] == "LTC") { //if LTC
@@ -268,6 +288,7 @@
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentLTC);
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if (order[5] == "XRP") { //if XRP
@@ -275,6 +296,7 @@
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentXRP);
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
               if (order[5] == "LINK") { //if LINK
@@ -282,6 +304,7 @@
                   this.usdAmount = this.usdAmount + (sellAmount * this.currentLINK);
                   delete this.ordersArray[0];
                   this.ordersArray.shift();
+                  this.updateTable(this.ordersTable, order[7]);
                 }
               }
             }
@@ -516,6 +539,8 @@
         }
       },
   cancelOrder(order){
+    //window.alert("Before: " + this.ordersArray);
+
     if(this.ordersArray[order]!=null){
       var holder=this.ordersArray[order];
       if(holder[0]=="Buy"){
@@ -540,12 +565,57 @@
         this.linkAmount = this.linkAmount+parseFloat(holder[2]);
       }
     }
-      delete this.ordersArray[order];
-      this.ordersArray= this.ordersArray.filter(function(x){
-        return x !== undefined;
-      });
+      this.canceledOrders = this.canceledOrders +1;
+      this.ordersArray.remove(order);
     }
   },
+  updateTable(table, row){
+    var currRow= table.rows[row+1].cells;
+    currRow[6].innerHTML="Complete";
+  },
+  dateFormat(date) {
+    var timeSuffix;
+
+    var formatted = (date.getMonth() + 1) + "/";
+
+    if (date.getDate() < 10) {
+      formatted += "0" + date.getDate() + "/";
+    } else {
+      formatted += date.getDate() + "/";
+    }
+
+    formatted += date.getFullYear() + " ";
+
+    if (date.getHours() == 0) {
+      formatted += "12" + ":";
+      timeSuffix = "AM";
+    } else if (date.getHours() == 12) {
+      formatted += "12" + ":";
+      timeSuffix = "PM";
+    } else if (date.getHours() < 13) {
+      formatted += date.getHours() + ":";
+      timeSuffix = "AM";
+    } else {
+      formatted += (date.getHours() - 12) + ":";
+      timeSuffix = "PM";
+    }
+
+    if (date.getMinutes() < 10) {
+      formatted += "0" + date.getMinutes() + ":";
+    } else {
+      formatted += date.getMinutes() + ":";
+    }
+
+    if (date.getSeconds() < 10) {
+      formatted += "0" + date.getSeconds() + " ";
+    } else {
+      formatted += date.getSeconds() + " ";
+    }
+
+    formatted += timeSuffix;
+
+    return formatted;
+  }
 },
   watch: {
     orderInfo: function() {
@@ -582,12 +652,16 @@
         var date = new Date();
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-        newRowData.push(withFee / price);
-        newRowData.push(withFee);
-        newRowData.push(this.orderInfo[2] * 0.005);
-        newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
-          + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-        newRowData.push("Filled");
+        newRowData.push((withFee / price).toFixed(8));
+        newRowData.push(withFee.toFixed(8));
+        newRowData.push((this.orderInfo[2] * 0.005).toFixed(8));
+        newRowData.push(this.dateFormat(date));
+        if(this.orderInfo[1]=="Market"){
+          newRowData.push("Filled");
+        }
+        else {
+          newRowData.push("Unfilled");
+        }
         newRowData.push(this.orderInfo[7]);
         this.$refs.OrderHistory.addRow(newRowData);
       }
@@ -597,7 +671,8 @@
       }
     },
     mounted(){
-      setInterval(() => this.getPrice(), 5000);
+      this.getPrice();
+      setInterval(() => this.getPrice(), 60000);
     }
   }
 </script>
@@ -609,8 +684,8 @@
     height: 100vh;
   }
   .message-header {
-    background-color: #f5f5f5;
-    color: black;
+    background-color: #35475A;
+    color: white;
   }
   #order-form {
     overflow: auto;
