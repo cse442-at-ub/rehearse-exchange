@@ -42,7 +42,7 @@ export default {
           btn.style.float = "right";
           cell.appendChild(btn);
           btn.addEventListener('click',()=>{
-            this.$emit('cancel',newRowData[6]);
+            this.$emit('cancel',newRowData[7]);
             row.deleteCell(6);
             var newCell = row.insertCell(6);
             newCell.innerHTML = "Cancelled";

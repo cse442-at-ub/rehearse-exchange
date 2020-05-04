@@ -63,6 +63,7 @@
         rowData: [],
         ordersArray: [],
         ordersTable: [],
+        canceledOrders:0,
       }
     },
     methods: {
@@ -538,6 +539,8 @@
         }
       },
   cancelOrder(order){
+    //window.alert("Before: " + this.ordersArray);
+
     if(this.ordersArray[order]!=null){
       var holder=this.ordersArray[order];
       if(holder[0]=="Buy"){
@@ -562,10 +565,8 @@
         this.linkAmount = this.linkAmount+parseFloat(holder[2]);
       }
     }
-      delete this.ordersArray[order];
-      this.ordersArray= this.ordersArray.filter(function(x){
-        return x !== undefined;
-      });
+      this.canceledOrders = this.canceledOrders +1;
+      this.ordersArray.remove(order);
     }
   },
   updateTable(table, row){
