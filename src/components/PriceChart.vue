@@ -24,8 +24,7 @@
         </div>
       </div>
     </div>
-    <div style="border-width: 1px; borderColor: #4e5d6c; color:lightgrey; font-family: 'Roboto', sans-serif;
-                      font-family: 'Lato', sans-serif;" class="is-divider"  v-bind:data-content="displayTimeframe()">
+    <div class="is-divider" style="borderColor: #4e5d6c;" v-bind:data-content="displayTimeframe()">
     </div>
     <div id="render-price-chart">
       <RenderPriceChart :timeframe="timeframe" :selectedCurrencyGet="selectedCurrencyGet" @getPrice="price = $event" @getPercentage="formatPercentage($event)"
@@ -74,10 +73,10 @@ export default {
     },
     formatPercentage(percentage) {
       if (percentage < 0) {
-        document.getElementById("percentage").style.color = "red";
+        document.getElementById("percentage").style.color = "#D6605A";
         this.percentage = percentage + "%";
       } else {
-        document.getElementById("percentage").style.color = "green";
+        document.getElementById("percentage").style.color = "#6CBF65";
         this.percentage = "+" + percentage + "%";
       }
     },
@@ -130,6 +129,7 @@ export default {
 </script>
 
 <style scoped>
+@import '../../node_modules/bulma-divider/dist/css/bulma-divider.min.css';
 
   #top-bar {
     align-items: center;
@@ -167,11 +167,12 @@ export default {
   .tabs {
     float: right;
   }
-  .is-divider {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  .is-divider::after {
-    background-color: #2C3F4F;
-  }
+
+.is-divider {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.is-divider::after {
+  background-color: #2C3F4F;
+}
 </style>

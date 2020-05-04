@@ -38,8 +38,7 @@
       </div>
     </a>
     <p class="control">
-      <a class="button is-outlined is-clickable" style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
-                      font-family: 'Lato', sans-serif;" @click = "addAmount()" >
+      <a class="button" @click = "addAmount()" >
         <span>Add</span>
       </a>
     </p>
@@ -101,10 +100,22 @@ export default {
 .is-divider {
   margin-top: 2.1rem;
   margin-bottom: 1rem;
-  color: orang
 }
 .is-divider::after {
   background-color: #2C3F4F;
+}
+
+.button {
+  background:#4e5d6c;
+  border-color: #35475a;
+  color:lightgrey;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
+}
+
+.button:hover {
+  background: #485563;
+  border-color: #8694a4;
 }
 
 </style>

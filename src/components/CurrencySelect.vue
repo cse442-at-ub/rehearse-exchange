@@ -5,31 +5,31 @@
                       font-family: 'Lato', sans-serif;">
         <option @click = "getCurrencies('BTC')">
           <button class="button"  >
-            <span>BTC-USD: ${{this.$parent.currentBTC}}</span>
+            <span>BTC-USD</span>
           </button>
         </option>
         <hr class="dropdown-divider" >
         <option @click = "getCurrencies('ETH')">
           <button class="button" >
-            <span>ETH-USD: ${{this.$parent.currentETH}}</span>
+            <span>ETH-USD</span>
           </button>
         </option>
         <hr class="dropdown-divider">
         <option @click = "getCurrencies('LTC')">
           <button class="button" >
-            <span>LTC-USD: ${{this.$parent.currentLTC}}</span>
+            <span>LTC-USD</span>
           </button>
         </option>
         <hr class="dropdown-divider">
         <option @click = "getCurrencies('XRP')">
           <button class="button" >
-            <span>XRP-USD: ${{this.$parent.currentXRP}}</span>
+            <span>XRP-USD</span>
           </button>
         </option>
         <hr class="dropdown-divider">
         <option @click = "getCurrencies('LINK')">
           <button class="button" >
-            <span>LINK-USD: ${{this.$parent.currentLINK}}</span>
+            <span>LINK-USD</span>
           </button>
         </option>
       </select>
