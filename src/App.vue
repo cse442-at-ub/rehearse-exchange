@@ -569,8 +569,51 @@
     }
   },
   updateTable(table, row){
-      var currRow= table.rows[row+1].cells;
-      currRow[6].innerHTML="Complete";
+    var currRow= table.rows[row+1].cells;
+    currRow[6].innerHTML="Complete";
+  },
+  dateFormat(date) {
+    var timeSuffix;
+
+    var formatted = (date.getMonth() + 1) + "/";
+
+    if (date.getDate() < 10) {
+      formatted += "0" + date.getDate() + "/";
+    } else {
+      formatted += date.getDate() + "/";
+    }
+
+    formatted += date.getFullYear() + " ";
+
+    if (date.getHours() == 0) {
+      formatted += "12" + ":";
+      timeSuffix = "AM";
+    } else if (date.getHours() == 12) {
+      formatted += "12" + ":";
+      timeSuffix = "PM";
+    } else if (date.getHours() < 13) {
+      formatted += date.getHours() + ":";
+      timeSuffix = "AM";
+    } else {
+      formatted += (date.getHours() - 12) + ":";
+      timeSuffix = "PM";
+    }
+
+    if (date.getMinutes() < 10) {
+      formatted += "0" + date.getMinutes() + ":";
+    } else {
+      formatted += date.getMinutes() + ":";
+    }
+
+    if (date.getSeconds() < 10) {
+      formatted += "0" + date.getSeconds() + " ";
+    } else {
+      formatted += date.getSeconds() + " ";
+    }
+
+    formatted += timeSuffix;
+
+    return formatted;
   }
 },
   watch: {
@@ -608,17 +651,16 @@
         var date = new Date();
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-        newRowData.push(withFee / price);
-        newRowData.push(withFee);
-        newRowData.push(this.orderInfo[2] * 0.005);
-        newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
-          + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-          if(this.orderInfo[1]=="Market"){
-            newRowData.push("Complete");
-          }
-          else{
-              newRowData.push("Filled");
-          }
+        newRowData.push((withFee / price).toFixed(8));
+        newRowData.push(withFee.toFixed(8));
+        newRowData.push((this.orderInfo[2] * 0.005).toFixed(8));
+        newRowData.push(this.dateFormat(date));
+        if(this.orderInfo[1]=="Market"){
+          newRowData.push("Filled");
+        }
+        else {
+          newRowData.push("Unfilled");
+        }
         newRowData.push(this.orderInfo[7]);
         this.$refs.OrderHistory.addRow(newRowData);
       }

@@ -6,7 +6,7 @@
         <span id="percentage">{{ percentage }}</span>
       </div>
       <div class="aside displayCurrency">
-         <strong>{{ displayCurrency }}</strong>
+         <strong style="color:lightgrey; font-family: 'Roboto', sans-serif; font-family: 'Lato', sans-serif;">{{ displayCurrency }}</strong>
       </div>
       <div class="timeSelect">
         <div class="aside tabs is-toggle is-fullwidth" id="bar1">
@@ -24,9 +24,11 @@
         </div>
       </div>
     </div>
-    <div class="is-divider" v-bind:data-content="displayTimeframe()"></div>
+    <div class="is-divider" style="borderColor: #4e5d6c;" v-bind:data-content="displayTimeframe()">
+    </div>
     <div id="render-price-chart">
-      <RenderPriceChart :timeframe="timeframe" :selectedCurrencyGet="selectedCurrencyGet" @getPrice="price = $event" @getPercentage="formatPercentage($event)" style="height: 285px"/>
+      <RenderPriceChart :timeframe="timeframe" :selectedCurrencyGet="selectedCurrencyGet" @getPrice="price = $event" @getPercentage="formatPercentage($event)"
+                        style="height: 285px"/>
     </div>
   </div>
 
@@ -71,20 +73,20 @@ export default {
     },
     formatPercentage(percentage) {
       if (percentage < 0) {
-        document.getElementById("percentage").style.color = "hsl(348, 100%, 61%)";
+        document.getElementById("percentage").style.color = "#D6605A";
         this.percentage = percentage + "%";
       } else {
-        document.getElementById("percentage").style.color = "hsl(141, 53%, 53%)";
+        document.getElementById("percentage").style.color = "#6CBF65";
         this.percentage = "+" + percentage + "%";
       }
     },
     displayTimeframe() {
       if (this.timeframe == 0) {
-        return "30 minutes";
+        return "30 minutes:";
       } else if (this.timeframe == 1) {
-        return "30 hours";
+        return "30 hours:";
       } else if (this.timeframe == 2) {
-        return "30 days";
+        return "30 days:";
       }
     },
     handleResize() {
@@ -127,6 +129,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../node_modules/bulma-divider/dist/css/bulma-divider.min.css';
+
   #top-bar {
     align-items: center;
     width: 100%;
@@ -141,6 +145,7 @@ export default {
     font-size: large;
     margin-left: .1rem;
   }
+
   .displayPrice {
     order: 2;
     width: 30%;
@@ -149,6 +154,9 @@ export default {
     order: 1;
     font-size: xx-large;
     text-align: left;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    color: lightgrey;
     width: 35%;
   }
   .timeSelect {
@@ -158,8 +166,12 @@ export default {
   .tabs {
     float: right;
   }
-  .is-divider {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
+
+.is-divider {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.is-divider::after {
+  background-color: #2C3F4F;
+}
 </style>

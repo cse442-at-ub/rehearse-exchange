@@ -20,6 +20,7 @@
                 var displayCurrency;
                 var price;
                 var percentage;
+
                 if (this.selectedCurrencyGet == "BTC") {
                     displayCurrency = this.display[0];
                     price = this.minutes[0][this.minutes[0].length - 1];
@@ -41,31 +42,51 @@
                     price = this.minutes[4][this.minutes[4].length - 1];
                     percentage = this.percentageChange[4];
                 }
-                 this.$emit('getPrice', price.toFixed(2));
-                 this.$emit('getPercentage', percentage.toFixed(2));
+                
+                this.$emit('getPrice', price.toFixed(2));
+                this.$emit('getPercentage', percentage.toFixed(2));
+                
+                var lineColor;
+                if (percentage >= 0) {
+                    lineColor = "#6CBF65";
+                } else {
+                    lineColor = "#D6605A";
+                }
                 this.renderChart({
                         labels: this.alpha,
                         datasets: [{
                             lineTension: 0,
                             fill: false,
-                            borderColor: "#55b6f9",
-                            pointRadius: 2,
+                            borderColor: lineColor,
+                            pointRadius: 0,
+                            pointHitRadius: 6,
                             data: displayCurrency
                         }]
-                    }, {
+                    },
+                    {
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
                             yAxes: [{
+                                gridLines: {
+                                    display: true ,
+                                    color: '#4E5D6C',
+                                },
                                 position: 'right',
                                 ticks: {
+                                    fontColor: '#d3d3d3',
                                     callback: function(value) {
                                         return '$' + value;
                                     }
                                 }
                             }],
                             xAxes: [{
+                                gridLines: {
+                                    display: true ,
+                                    color: '#4E5D6C'
+                                },
                                 ticks: {
+                                    fontColor: '#d3d3d3',
                                     autoSkip: true,
                                     maxTicksLimit: 15
                                 }
@@ -128,9 +149,10 @@
 
                     this.display = this.minutes;
                     var dates = [];
-                    for (var date = -29; date < 1; date++) {
+                    for (var date = -29; date < 0; date++) {
                         dates.push(this.minuteFormat(new Date().addMinutes(date)));
                     }
+                    dates.push("Now");
                     this.alpha = dates;
 
                     for (var i = 0; i < 5; i++) {
