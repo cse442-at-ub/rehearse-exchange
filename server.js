@@ -2,7 +2,8 @@ const express = require('express')
 const serveStatic = require('serve-static')
 const path = require('path')
 const fetch = require('node-fetch');
-const secret = require('./secret.js');
+
+var { apiKey } = require('./secret');
 
 const app = express()
 
@@ -12,8 +13,6 @@ const port = process.env.PORT || 8080
 app.listen(port)
 
 console.log('Listening on port: ' + port)
-
-var apiKey = secret.API_KEY;
 
 var minuteResults = []
 const minuteUrl = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,LTC,ETH,XRP,LINK&tsyms=USD&api_key=' + apiKey
