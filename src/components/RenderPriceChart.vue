@@ -113,9 +113,9 @@
                 var hourData;
                 var dayData;
                 axios.all([
-                    axios.get('http://localhost:8080/minute-data'),
-                    axios.get('http://localhost:8080/hour-data'),
-                    axios.get('http://localhost:8080/day-data')
+                    axios.get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/minute-data'),
+                    axios.get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/hour-data'),
+                    axios.get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app//day-data')
                 ])
                 .then(axios.spread((minuteResponse, hourResponse, dayResponse) => {
                     minuteData = minuteResponse.data,

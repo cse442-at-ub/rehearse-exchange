@@ -2,6 +2,7 @@ const express = require('express')
 const serveStatic = require('serve-static')
 const path = require('path')
 const fetch = require('node-fetch');
+const secret = require('./secret.js');
 
 const app = express()
 
@@ -12,25 +13,27 @@ app.listen(port)
 
 console.log('Listening on port: ' + port)
 
+var apiKey = secret.API_KEY;
+
 var minuteResults = []
-const minuteUrl = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,LTC,ETH,XRP,LINK&tsyms=USD&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285'
+const minuteUrl = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,LTC,ETH,XRP,LINK&tsyms=USD&api_key=' + apiKey
 
 var hourResults = [,,,,]
 const hourUrls = [
-    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=LTC&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=ETH&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=XRP&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=LINK&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285'
+    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=LTC&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=ETH&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=XRP&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histohour?fsym=LINK&tsym=USD&limit=28&api_key=' + apiKey,
 ];
 
 var dayResults = [,,,,]
 const dayUrls = [
-    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=LTC&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=XRP&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285',
-    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=LINK&tsym=USD&limit=28&api_key=81fe37e9e9c0f635a9584eb3998625c5a70df94c755f84ee92a382d99410e285'
+    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=LTC&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=XRP&tsym=USD&limit=28&api_key=' + apiKey,
+    'https://min-api.cryptocompare.com/data/v2/histoday?fsym=LINK&tsym=USD&limit=28&api_key=' + apiKey,
 ];
 
 function getMinute() {

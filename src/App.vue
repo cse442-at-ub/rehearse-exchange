@@ -69,7 +69,7 @@
     methods: {
       getPrice() {
         axios
-          .get('http://localhost:8080/current-prices')
+          .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/current-prices')
           .then(response => (
             this.currentBTC = response.data.BTC.USD,
             this.currentETH = response.data.ETH.USD,
