@@ -149,7 +149,6 @@ export default {
   .displayPrice {
     order: 2;
     width: 30%;
-    color: ora
   }
   .displayCurrency {
     order: 1;

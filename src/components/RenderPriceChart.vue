@@ -42,6 +42,7 @@
                     price = this.minutes[4][this.minutes[4].length - 1];
                     percentage = this.percentageChange[4];
                 }
+                
                 this.$emit('getPrice', price.toFixed(2));
                 this.$emit('getPercentage', percentage.toFixed(2));
                 

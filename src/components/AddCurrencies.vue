@@ -11,6 +11,7 @@
       <div class="select">
         <select style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
                       font-family: 'Lato', sans-serif;">
+          <hr class="dropdown-divider">
           <option @click= "changeCurrencies('btc')">
             <button class="button">BTC</button>
           </option>
@@ -30,7 +31,6 @@
           <option @click = "changeCurrencies('link')">
             <button class="button">LINK</button>
           </option>
-          <hr class="dropdown-divider">
           <option @click = "changeCurrencies('usd')">
             <button class="button">USD</button>
           </option>

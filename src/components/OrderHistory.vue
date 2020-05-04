@@ -79,6 +79,14 @@ td {
   max-height: 100%;
 }
 
+.button {
+  background:#4e5d6c;
+  border-color: #35475a;
+  color:lightgrey;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
+}
+
 .table {
   width: 100%;
 }
