@@ -63,6 +63,7 @@
         rowData: [],
         ordersArray: [],
         ordersTable: [],
+        canceledOrders:0,
       }
     },
     methods: {
@@ -542,67 +543,103 @@
 
     if(this.ordersArray[order]!=null){
       var holder=this.ordersArray[order];
-      window.alert(holder);
+      var currRow;
       if(holder[0]=="Buy"){
         if(holder[6]=="USD"){
           this.usdAmount = this.usdAmount + parseFloat(holder[3]);
-          if(holder[7]==this.ordersArray.length-1){
-            this.ordersTable.deleteRow(1);
-          }
-          else if(holder[7]==0){
-            this.ordersTable.deleteRow(this.ordersTable.rows.length-1);
-          }
-          else{
-            this.ordersTable.deleteRow(this.ordersTable.rows.length - holder[7]-1);
+
+            if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+                currRow=this.ordersTable.rows[1].cells;
             }
+            else if(order==this.ordersArray.length-1){
+              currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+            }
+            else{
+              currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+            }
+            currRow[6].innerHTML = "Canceled";
           }
         }
       else{
       if(holder[5]=="BTC"){
         this.btcAmount = this.btcAmount +parseFloat(holder[2]);
-        this.ordersTable.deleteRow(holder[7]);
+
+        if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+            currRow=this.ordersTable.rows[1].cells;
+        }
+        else if(order==this.ordersArray.length-1){
+          currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+        }
+        else{
+          currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+        }
+        currRow[6].innerHTML = "Canceled";
       }
       else if(holder[5]=="LTC"){
         this.ltcAmount = this.ltcAmount +parseFloat(holder[2]);
+
+        if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+            currRow=this.ordersTable.rows[1].cells;
+        }
+        else if(order==this.ordersArray.length-1){
+          currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+        }
+        else{
+          currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+        }
+        currRow[6].innerHTML = "Canceled";
       }
       else if(holder[5]=="XRP"){
         this.xrpAmount = this.xrpAmount + parseFloat(holder[2]);
+
+        if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+            currRow=this.ordersTable.rows[1].cells;
+        }
+        else if(order==this.ordersArray.length-1){
+          currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+        }
+        else{
+          currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+        }
+        currRow[6].innerHTML = "Canceled";
       }
       else if(holder[5]=="ETH"){
         this.ethAmount = this.ethAmount + parseFloat(holder[2]);
+
+        if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+            currRow=this.ordersTable.rows[1].cells;
+        }
+        else if(order==this.ordersArray.length-1){
+          currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+        }
+        else{
+          currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+        }
+        currRow[6].innerHTML = "Canceled";
       }
       else if(holder[5]=="LINK"){
         this.linkAmount = this.linkAmount+parseFloat(holder[2]);
+        
+        if(order==this.ordersArray.length-1 && this.ordersTable.rows[1].cells[6].innerHTML=="Unfilled"){
+            currRow=this.ordersTable.rows[1].cells;
+        }
+        else if(order==this.ordersArray.length-1){
+          currRow = this.ordersTable.rows[1+this.canceledOrders].cells;
+        }
+        else{
+          currRow = this.ordersTable.rows[this.ordersTable.rows.length - order -1].cells;
+        }
+        currRow[6].innerHTML = "Canceled";
       }
     }
-
-      delete this.ordersArray[order];
-      this.ordersArray= this.ordersArray.filter(function(x){
-        return x !== undefined;
-      });
-      //window.alert("After: " + this.ordersArray);
-      this.updateOrdersArray();
+      this.canceledOrders = this.canceledOrders +1;
+      this.ordersArray.remove(order);
     }
   },
   updateTable(table, row){
       var currRow= table.rows[row+1].cells;
-      currRow[6].innerHTML="Complete";
+      currRow[6].innerHTML="Filled";
   },
-  updateOrdersArray(){
-    if(this.ordersArray.length!=0){
-      var order;
-      var row;
-      var count =0;
-      for(order of this.ordersArray){
-        order[7]=count;
-        count++;
-      }
-      count=0;
-      for(row of this.ordersTable.rows){
-
-      }
-    }
-  }
 },
   watch: {
     orderInfo: function() {
@@ -637,7 +674,6 @@
         var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
         var newRowData = [];
         var date = new Date();
-        this.updateOrdersArray();
         newRowData.push(this.orderInfo[0]);
         newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
         newRowData.push(withFee / price);
@@ -646,10 +682,10 @@
         newRowData.push((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
           + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
           if(this.orderInfo[1]=="Market"){
-            newRowData.push("Complete");
+            newRowData.push("Filled");
           }
           else{
-              newRowData.push("Filled");
+              newRowData.push("Unfilled");
           }
         newRowData.push(this.orderInfo[7]);
         this.$refs.OrderHistory.addRow(newRowData);
