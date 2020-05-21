@@ -20,7 +20,12 @@
       </div>
     </div>
     <div class="tile is-parent is-vertical is-8">
-      <div class="message-header">Price Chart</div>
+      <div class="message-header">
+        Price Chart
+        <a href="https://github.com/cse442-spring-2020-offering/cse442-semester-project-trading-app">
+          <i class="fab fa-github fa-lg"></i>
+        </a>
+      </div>
       <div class="tile is-child box message-body" id="price-chart">
         <PriceChart :selectedCurrencyGet="selectedCurrencyGet"/>
       </div>
@@ -71,12 +76,13 @@
         ordersArray: [],
         ordersTable: [],
         canceledOrders:0,
+        baseUrl: "https://rehearse.exchange"
       }
     },
     methods: {
       getPrice() {
         axios
-          .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/current-prices')
+          .get(this.baseUrl + '/current-prices')
           .then(response => (
             this.currentBTC = response.data.BTC.USD,
             this.currentETH = response.data.ETH.USD,
