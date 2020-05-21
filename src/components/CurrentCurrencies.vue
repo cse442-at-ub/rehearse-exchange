@@ -10,29 +10,12 @@
 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
   <div class="dropdown-content">
     <div class="dropdown-item">
-      <option>
-        <h3 class= "title is-3">BTC: <p class="walletAmount">{{this.$parent.btcAmount}}</p></h3>
-      </option>
-       <hr class="dropdown-divider">
-      <option>
-        <h3 class ="title is-3">ETH: <p class="walletAmount">{{this.$parent.ethAmount}}</p></h3>
-      </option>
-      <hr class="dropdown-divider">
-      <option>
-        <h3 class ="title is-3">LTC: <p class="walletAmount">{{this.$parent.ltcAmount}}</p></h3>
-      </option>
-      <hr class="dropdown-divider">
-      <option>
-      <h3 class="title is-3">XRP: <p class="walletAmount">{{this.$parent.xrpAmount}}</p></h3>
-      </option>
-      <hr class="dropdown-divider">
-      <option>
-        <h3 class="title is-3">LINK: <p class="walletAmount">{{this.$parent.linkAmount}}</p></h3>
-      </option>
-      <hr class="dropdown-divider">
-      <option>
-        <h3 class="title is-3">USD: <p class="walletAmount">{{this.$parent.usdAmount}}</p></h3>
-      </option>
+        <span class="symbol">BTC</span><span class="amount">{{btcAmount.toFixed(3)}}</span><br>
+        <span class="symbol">ETH</span><span class="amount">{{ethAmount.toFixed(3)}}</span><br>
+        <span class="symbol">LTC</span><span class="amount">{{ltcAmount.toFixed(3)}}</span><br>
+        <span class="symbol">XRP</span><span class="amount">{{xrpAmount.toFixed(3)}}</span><br>
+        <span class="symbol">LINK</span><span class="amount">{{linkAmount.toFixed(3)}}</span><br>
+        <span class="symbol">USD</span><span class="amount">{{usdAmount.toFixed(3)}}</span><br>
     </div>
   </div>
 </div>
@@ -44,15 +27,22 @@
 <script>
 export default {
   name: 'CurrentCurrencies',
-
+  props: ['btcAmount', 'ethAmount', 'ltcAmount', 'xrpAmount', 'linkAmount', 'usdAmount'],
 }
 </script>
 <style>
-.walletAmount{
-  text-align:left;
+.dropdown-menu {
+  width: 100%;
 }
-
 .dropdown, .dropdown-trigger {
   width: 100%;
+}
+.symbol {
+  font-size: x-large;
+  font-weight: bold;
+}
+.amount {
+  font-size: x-large;
+  float: right;
 }
 </style>

@@ -4,7 +4,14 @@
       <div class="message-header">Currency Select</div>
       <div class="tile is-child box message-body" id="currency-select">
         <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
-        <div class="currentCurrency"><CurrentCurrencies/></div>
+        <div class="currentCurrency"><CurrentCurrencies
+          :btcAmount="btcAmount"
+          :ethAmount="ethAmount"
+          :ltcAmount="ltcAmount"
+          :xrpAmount="xrpAmount"
+          :linkAmount="linkAmount"
+          :usdAmount="usdAmount"
+        /></div>
         <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
       </div>
       <div class="message-header">Order Form</div>
@@ -330,6 +337,17 @@
         if(pair[0]=='usd'){
           this.usdAmount=this.usdAmount+parseFloat(pair[1]);
         }
+        var newRowData = [];
+        var date = new Date();
+        newRowData.push("Add");
+        newRowData.push(this.selectedCurrencyGet);
+        newRowData.push(parseFloat(pair[1]).toFixed(8));
+        newRowData.push("0.00000000");
+        newRowData.push("0.00000000");
+        newRowData.push(this.dateFormat(date));
+        newRowData.push("Filled");
+        newRowData.push(this.orderInfo[7]);
+        this.$refs.OrderHistory.addRow(newRowData);
       },
       checkMarketOrder(){
         if(this.orderInfo[0]=="Buy") {

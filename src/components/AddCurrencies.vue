@@ -9,31 +9,14 @@
     </p>
     <a class="control">
       <div class="select">
-        <select style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
+        <select @change="changeCurrencies" style="background:#4e5d6c; border-color: #35475a; color:lightgrey; font-family: 'Roboto', sans-serif;
                       font-family: 'Lato', sans-serif;">
-          <hr class="dropdown-divider">
-          <option @click= "changeCurrencies('btc')">
-            <button class="button">BTC</button>
-          </option>
-          <hr class="dropdown-divider">
-          <option @click = "changeCurrencies('eth')">
-            <button class="button">ETH</button>
-          </option>
-          <hr class="dropdown-divider">
-          <option @click = "changeCurrencies('ltc')">
-            <button class="button">LTC</button>
-          </option>
-          <hr class="dropdown-divider">
-          <option @click = "changeCurrencies('xrp')">
-            <button class="button">XRP</button>
-          </option>
-          <hr class="dropdown-divider">
-          <option @click = "changeCurrencies('link')">
-            <button class="button">LINK</button>
-          </option>
-          <option @click = "changeCurrencies('usd')">
-            <button class="button">USD</button>
-          </option>
+            <option value="btc">BTC</option>
+            <option value="eth">ETH</option>
+            <option value="ltc">LTC</option>
+            <option value="xrp">XRP</option>
+            <option value="link">LINK</option>
+            <option value="usd">USD</option>
         </select>
       </div>
     </a>
@@ -53,8 +36,8 @@
 export default {
   name: 'AddCurrencies',
   methods:{
-      changeCurrencies(get){
-        this.selectedCurrenciesGet = get;
+      changeCurrencies(event){
+        this.selectedCurrenciesGet = event.target.value;
       },
       addAmount(){
        if(!isNaN(this.amountToAdd)){
