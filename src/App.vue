@@ -22,7 +22,7 @@
     <div class="tile is-parent is-vertical is-8">
       <div class="message-header">
         Price Chart
-        <a href="https://github.com/cse442-spring-2020-offering/cse442-semester-project-trading-app">
+        <a href="https://github.com/cse442-spring-2020-offering/rehearse-exchange">
           <i class="fab fa-github fa-lg"></i>
         </a>
       </div>
