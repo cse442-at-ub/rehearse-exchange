@@ -3,7 +3,7 @@ const serveStatic = require('serve-static')
 const path = require('path')
 const fetch = require('node-fetch');
 
-const apiKey = process.env.API_KEY
+const { apiKey } = require('./secret')
 
 const app = express()
 
