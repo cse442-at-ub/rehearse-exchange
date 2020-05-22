@@ -4,7 +4,14 @@
       <div class="message-header">Currency Select</div>
       <div class="tile is-child box message-body" id="currency-select">
         <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
-        <div class="currentCurrency"><CurrentCurrencies/></div>
+        <div class="currentCurrency"><CurrentCurrencies
+          :btcAmount="btcAmount"
+          :ethAmount="ethAmount"
+          :ltcAmount="ltcAmount"
+          :xrpAmount="xrpAmount"
+          :linkAmount="linkAmount"
+          :usdAmount="usdAmount"
+        /></div>
         <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
       </div>
       <div class="message-header">Order Form</div>
@@ -13,7 +20,12 @@
       </div>
     </div>
     <div class="tile is-parent is-vertical is-8">
-      <div class="message-header">Price Chart</div>
+      <div class="message-header">
+        Price Chart
+        <a href="https://github.com/cse442-spring-2020-offering/cse442-semester-project-trading-app">
+          <i class="fab fa-github fa-lg"></i>
+        </a>
+      </div>
       <div class="tile is-child box message-body" id="price-chart">
         <PriceChart :selectedCurrencyGet="selectedCurrencyGet"/>
       </div>
@@ -64,12 +76,13 @@
         ordersArray: [],
         ordersTable: [],
         canceledOrders:0,
+        baseUrl: "https://rehearse.exchange"
       }
     },
     methods: {
       getPrice() {
         axios
-          .get('https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442j/cse442-semester-project-trading-app/current-prices')
+          .get(this.baseUrl + '/current-prices')
           .then(response => (
             this.currentBTC = response.data.BTC.USD,
             this.currentETH = response.data.ETH.USD,
@@ -330,6 +343,17 @@
         if(pair[0]=='usd'){
           this.usdAmount=this.usdAmount+parseFloat(pair[1]);
         }
+        var newRowData = [];
+        var date = new Date();
+        newRowData.push("Add");
+        newRowData.push(this.selectedCurrencyGet);
+        newRowData.push(parseFloat(pair[1]).toFixed(8));
+        newRowData.push("0.00000000");
+        newRowData.push("0.00000000");
+        newRowData.push(this.dateFormat(date));
+        newRowData.push("Filled");
+        newRowData.push(this.orderInfo[7]);
+        this.$refs.OrderHistory.addRow(newRowData);
       },
       checkMarketOrder(){
         if(this.orderInfo[0]=="Buy") {
