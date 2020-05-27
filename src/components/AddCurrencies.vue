@@ -72,7 +72,7 @@ export default {
             this.$emit('changeAmount',pair);
           }
         }
-        //this.amountToAdd = "";
+        this.amountToAdd = "";
       }
   }
 }
