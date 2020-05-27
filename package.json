@@ -8,8 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "start": "node server.js",
-    "test": "mocha",
-    "deploy": "echo rehearse.exchange > dist/CNAME && gh-pages -d dist"
+    "test": "mocha"
   },
   "dependencies": {
     "axios": "^0.19.2",

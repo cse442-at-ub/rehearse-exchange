@@ -17,7 +17,7 @@
       </li>
     </ul>
   </div>
-  <component :is="currentTab"
+  <component :is="currentTab" ref="currentTab"
     @changeOrderAmount="orderAmount = $event"
     @changeOrderLimitPrice="orderLimitPrice = $event"
     @changeOrderStopPrice="orderStopPrice = $event"
@@ -70,8 +70,11 @@ export default {
       if(this.$parent.ordersArray[0]!=null){
         orderNum=this.$parent.ordersArray.length;
       }
-      var orderInfo = [this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice,this.$parent.selectedCurrencyGet,this.$parent.selectedCurrencyGive,orderNum];
+      var orderInfo = [this.orderType, this.currentTabName, this.orderAmount, this.orderLimitPrice, this.orderStopPrice, this.$parent.selectedCurrencyGet, this.$parent.selectedCurrencyGive,orderNum];
       this.$emit('placeOrder', orderInfo);
+      this.$refs.currentTab.resetInput();
+      this.orderLimitPrice = "";
+      this.orderStopPrice = "";
     },
     uiSetSell() {
       document.getElementById("buy-tab").classList.remove("is-active");

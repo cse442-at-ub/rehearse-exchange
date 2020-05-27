@@ -27,7 +27,11 @@ export default {
       orderAmount: null
     }
   },
-
+  methods: {
+    resetInput() {
+      this.orderAmount = "";
+    }
+  },
   watch: {
     orderAmount: function() {
       this.$emit('changeOrderAmount', this.orderAmount);
