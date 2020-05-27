@@ -86,7 +86,7 @@
         historyKey: 0,
         resetMessage: "Reset Session",
         hasClickedReset: false,
-        baseUrl: "http://localhost:8080"
+        baseUrl: "https://rehearse.exchange"
       }
     },
     methods: {
@@ -738,13 +738,25 @@
           newRowData.push(this.orderInfo[0]);
           newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
           if (this.orderInfo[0] == "Buy") {
-            newRowData.push((withFee / price).toFixed(8));
-            newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8));
-            newRowData.push((this.orderInfo[2] * 0.005).toFixed(8));
+            if (this.orderInfo[1] == "Market") {
+              newRowData.push((withFee / price).toFixed(8)); // Amount bought (fee deducted)
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // USD spent
+              newRowData.push((this.orderInfo[2] * .005).toFixed(8)); // Fee in USD
+            } else {
+              newRowData.push(withFee.toFixed(8)); //Amount to buy (fee deducted)
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3]).toFixed(8)); // USD to be spent
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3] * .005).toFixed(8)); // Fee in USD
+            }
           } else {
-            newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8));
-            newRowData.push((this.orderInfo[2] * price).toFixed(8));
-            newRowData.push((this.orderInfo[2] * price * .005).toFixed(8));
+            if (this.orderInfo[1] == "Market") {
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // Amount sold
+              newRowData.push((withFee * price).toFixed(8)); // USD gained (Fee deducted)
+              newRowData.push((this.orderInfo[2] * price * .005).toFixed(8)); // Fee in USD
+            } else {
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // Amount to sell
+              newRowData.push((withFee * this.orderInfo[3]).toFixed(8)); // USD to be gained
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3] * .005).toFixed(8)); // Fee in USD
+            }
           }
           newRowData.push(this.dateFormat(date));
           if(this.orderInfo[1]=="Market"){
