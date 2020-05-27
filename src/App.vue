@@ -3,16 +3,23 @@
     <div class="tile is-parent is-vertical is-4">
       <div class="message-header">Currency Select</div>
       <div class="tile is-child box message-body" id="currency-select">
-        <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
-        <div class="currentCurrency"><CurrentCurrencies
-          :btcAmount="btcAmount"
-          :ethAmount="ethAmount"
-          :ltcAmount="ltcAmount"
-          :xrpAmount="xrpAmount"
-          :linkAmount="linkAmount"
-          :usdAmount="usdAmount"
-        /></div>
+        <div id="top">
+        <div id="sc-bar">
+          <div class="currencySelect"><CurrencySelect @getCurrencies = "selectedCurrencyGet = $event" /></div>
+          <div class="currentCurrency"><CurrentCurrencies
+            :btcAmount="btcAmount"
+            :ethAmount="ethAmount"
+            :ltcAmount="ltcAmount"
+            :xrpAmount="xrpAmount"
+            :linkAmount="linkAmount"
+            :usdAmount="usdAmount"
+          /></div>
+        </div>
         <div class="addCurrencies"><AddCurrencies @changeAmount = "addAmount($event)"/></div>
+        </div>
+        <div id="bottom">
+          <button class="button is-outlined is-danger" id="reset-button" @click="resetSession()">{{resetMessage}}</button>
+        </div>
       </div>
       <div class="message-header">Order Form</div>
       <div class="tile is-child box message-body" id="order-form">
@@ -22,7 +29,7 @@
     <div class="tile is-parent is-vertical is-8">
       <div class="message-header">
         Price Chart
-        <a href="https://github.com/cse442-spring-2020-offering/cse442-semester-project-trading-app">
+        <a href="https://github.com/cse442-spring-2020-offering/rehearse-exchange">
           <i class="fab fa-github fa-lg"></i>
         </a>
       </div>
@@ -31,7 +38,7 @@
       </div>
       <div class="message-header">Order History</div>
       <div class="tile is-child box message-body" id="order-history">
-        <OrderHistory @cancel="cancelOrder($event)" @passTable="ordersTable=$event" ref="OrderHistory"/>
+        <OrderHistory @cancel="cancelOrder($event)" @passTable="ordersTable=$event" ref="OrderHistory" :key="historyKey"/>
       </div>
     </div>
   </div>
@@ -75,7 +82,10 @@
         rowData: [],
         ordersArray: [],
         ordersTable: [],
-        canceledOrders:0,
+        canceledOrders: 0,
+        historyKey: 0,
+        resetMessage: "Reset Session",
+        hasClickedReset: false,
         baseUrl: "https://rehearse.exchange"
       }
     },
@@ -346,16 +356,22 @@
         var newRowData = [];
         var date = new Date();
         newRowData.push("Add");
-        newRowData.push(this.selectedCurrencyGet);
+        newRowData.push(pair[0].toUpperCase());
         newRowData.push(parseFloat(pair[1]).toFixed(8));
         newRowData.push("0.00000000");
         newRowData.push("0.00000000");
         newRowData.push(this.dateFormat(date));
         newRowData.push("Filled");
         newRowData.push(this.orderInfo[7]);
-        this.$refs.OrderHistory.addRow(newRowData);
+        this.$refs.OrderHistory.newOrder(newRowData);
       },
       checkMarketOrder(){
+
+        if (isNaN(this.orderInfo[2]) || this.orderInfo[2] == null || this.orderInfo[2] <= 0) {
+          window.alert("Amount must be a positive numeric value.");
+          return;
+        }
+
         if(this.orderInfo[0]=="Buy") {
           if (this.orderInfo[2] > this.usdAmount) {
             window.alert("Failed to buy, not enough USD");
@@ -444,6 +460,16 @@
         }
       },
       checkLimitOrder(){
+
+        if (isNaN(this.orderInfo[2]) || this.orderInfo[2] == null || this.orderInfo[2] <= 0) {
+          window.alert("Amount must be a positive numeric value.");
+          return;
+        }
+        if (isNaN(this.orderInfo[3]) || this.orderInfo[3] == null || this.orderInfo[3] <= 0) {
+          window.alert("Limit price must be a positive numeric value.");
+          return;
+        }
+
         if(this.orderInfo[0]=="Buy") {
           if (this.orderInfo[3] > this.usdAmount) {
             window.alert("Failed to buy, not enough USD");
@@ -506,6 +532,20 @@
         }
       },
       checkStopOrder(){
+
+        if (isNaN(this.orderInfo[2]) || this.orderInfo[2] == null || this.orderInfo[2] <= 0) {
+          window.alert("Amount must be a positive numeric value.");
+          return;
+        }
+        if (isNaN(this.orderInfo[3]) || this.orderInfo[3] == null || this.orderInfo[3] <= 0) {
+          window.alert("Limit price must be a positive numeric value.");
+          return;
+        }
+        if (isNaN(this.orderInfo[4]) || this.orderInfo[4] == null || this.orderInfo[4] <= 0) {
+          window.alert("Stop price must be a positive numeric value.");
+          return;
+        }
+
         if(this.orderInfo[0]=="Buy") {
           if (this.orderInfo[3] > this.usdAmount) {
             window.alert("Failed to buy, not enough USD");
@@ -562,141 +602,225 @@
           }
         }
       },
-  cancelOrder(order){
-    //window.alert("Before: " + this.ordersArray);
+      cancelOrder(order){
 
-    if(this.ordersArray[order]!=null){
-      var holder=this.ordersArray[order];
-      if(holder[0]=="Buy"){
-        if(holder[6]=="USD"){
-          this.usdAmount = this.usdAmount + parseFloat(holder[3]);
+        if(this.ordersArray[order]!=null){
+          var holder=this.ordersArray[order];
+          if(holder[0]=="Buy"){
+            if(holder[6]=="USD"){
+              this.usdAmount = this.usdAmount + parseFloat(holder[3]);
+              }
+            }
+          else{
+          if(holder[5]=="BTC"){
+            this.btcAmount = this.btcAmount +parseFloat(holder[2]);
+          }
+          else if(holder[5]=="LTC"){
+            this.ltcAmount = this.ltcAmount +parseFloat(holder[2]);
+          }
+          else if(holder[5]=="XRP"){
+            this.xrpAmount = this.xrpAmount + parseFloat(holder[2]);
+          }
+          else if(holder[5]=="ETH"){
+            this.ethAmount = this.ethAmount + parseFloat(holder[2]);
+          }
+          else if(holder[5]=="LINK"){
+            this.linkAmount = this.linkAmount+parseFloat(holder[2]);
           }
         }
-      else{
-      if(holder[5]=="BTC"){
-        this.btcAmount = this.btcAmount +parseFloat(holder[2]);
-      }
-      else if(holder[5]=="LTC"){
-        this.ltcAmount = this.ltcAmount +parseFloat(holder[2]);
-      }
-      else if(holder[5]=="XRP"){
-        this.xrpAmount = this.xrpAmount + parseFloat(holder[2]);
-      }
-      else if(holder[5]=="ETH"){
-        this.ethAmount = this.ethAmount + parseFloat(holder[2]);
-      }
-      else if(holder[5]=="LINK"){
-        this.linkAmount = this.linkAmount+parseFloat(holder[2]);
-      }
-    }
-      this.canceledOrders = this.canceledOrders +1;
-      this.ordersArray.remove(order);
-    }
-  },
-  updateTable(table, row){
-    var currRow= table.rows[row+1].cells;
-    currRow[6].innerHTML="Complete";
-  },
-  dateFormat(date) {
-    var timeSuffix;
-
-    var formatted = (date.getMonth() + 1) + "/";
-
-    if (date.getDate() < 10) {
-      formatted += "0" + date.getDate() + "/";
-    } else {
-      formatted += date.getDate() + "/";
-    }
-
-    formatted += date.getFullYear() + " ";
-
-    if (date.getHours() == 0) {
-      formatted += "12" + ":";
-      timeSuffix = "AM";
-    } else if (date.getHours() == 12) {
-      formatted += "12" + ":";
-      timeSuffix = "PM";
-    } else if (date.getHours() < 13) {
-      formatted += date.getHours() + ":";
-      timeSuffix = "AM";
-    } else {
-      formatted += (date.getHours() - 12) + ":";
-      timeSuffix = "PM";
-    }
-
-    if (date.getMinutes() < 10) {
-      formatted += "0" + date.getMinutes() + ":";
-    } else {
-      formatted += date.getMinutes() + ":";
-    }
-
-    if (date.getSeconds() < 10) {
-      formatted += "0" + date.getSeconds() + " ";
-    } else {
-      formatted += date.getSeconds() + " ";
-    }
-
-    formatted += timeSuffix;
-
-    return formatted;
-  }
-},
-  watch: {
-    orderInfo: function() {
-      var check;
-      if (this.orderInfo[1] == "Market") {
-        check = this.checkMarketOrder();
-      } else if (this.orderInfo[1] == "Limit") {
-        check = this.checkLimitOrder();
-      } else if (this.orderInfo[1] == "Stop") {
-        check = this.checkStopOrder();
-      }
-      if (check) {
-        if (this.orderInfo[1] != "Market") {
-          this.ordersArray.push(this.orderInfo);
+          this.canceledOrders = this.canceledOrders +1;
+          this.ordersArray.remove(order);
         }
-        var price;
-        if (this.selectedCurrencyGet == "BTC"){
-          price = this.currentBTC;
+      },
+      updateTable(table, row){
+        var currRow= table.rows[row+1].cells;
+        currRow[6].innerHTML="Filled";
+        this.$refs.OrderHistory.updateRow(row);
+      },
+      dateFormat(date) {
+        var timeSuffix;
+
+        var formatted = (date.getMonth() + 1) + "/";
+
+        if (date.getDate() < 10) {
+          formatted += "0" + date.getDate() + "/";
+        } else {
+          formatted += date.getDate() + "/";
         }
-        else if (this.selectedCurrencyGet == "LTC"){
-          price = this.currentLTC;
+
+        formatted += date.getFullYear() + " ";
+
+        if (date.getHours() == 0) {
+          formatted += "12" + ":";
+          timeSuffix = "AM";
+        } else if (date.getHours() == 12) {
+          formatted += "12" + ":";
+          timeSuffix = "PM";
+        } else if (date.getHours() < 13) {
+          formatted += date.getHours() + ":";
+          timeSuffix = "AM";
+        } else {
+          formatted += (date.getHours() - 12) + ":";
+          timeSuffix = "PM";
         }
-        else if( this.selectedCurrenyGet == "ETH"){
-          price = this.currentETH;
+
+        if (date.getMinutes() < 10) {
+          formatted += "0" + date.getMinutes() + ":";
+        } else {
+          formatted += date.getMinutes() + ":";
         }
-        else if (this.selectedCurrencyGet == "XRP"){
-          price = this.currentXRP;
+
+        if (date.getSeconds() < 10) {
+          formatted += "0" + date.getSeconds() + " ";
+        } else {
+          formatted += date.getSeconds() + " ";
         }
-        else if (this.selectedCurrencyGet == "LINK") {
-          price = this.currentLINK;
+
+        formatted += timeSuffix;
+
+        return formatted;
+      },
+      resetSession() {
+        if (!this.hasClickedReset) {
+          this.resetMessage = "All session data will be wiped. Confirm?"
+          this.hasClickedReset = true;
+        } else {
+          this.resetMessage = "Reset Session";
+          this.hasClickedReset = false;
+          
+          this.btcAmount = 0;
+          this.ethAmount = 0;
+          this.ltcAmount = 0;
+          this.xrpAmount = 0;
+          this.linkAmount = 0;
+          this.usdAmount = 0;
+          this.ordersArray = [];
+
+          localStorage.removeItem("orderData");
+
+          this.historyKey += 1;
         }
-        var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
-        var newRowData = [];
-        var date = new Date();
-        newRowData.push(this.orderInfo[0]);
-        newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
-        newRowData.push((withFee / price).toFixed(8));
-        newRowData.push(withFee.toFixed(8));
-        newRowData.push((this.orderInfo[2] * 0.005).toFixed(8));
-        newRowData.push(this.dateFormat(date));
-        if(this.orderInfo[1]=="Market"){
-          newRowData.push("Filled");
-        }
-        else {
-          newRowData.push("Unfilled");
-        }
-        newRowData.push(this.orderInfo[7]);
-        this.$refs.OrderHistory.addRow(newRowData);
       }
     },
+    watch: {
+      orderInfo: function() {
+        var check;
+        if (this.orderInfo[1] == "Market") {
+          check = this.checkMarketOrder();
+        } else if (this.orderInfo[1] == "Limit") {
+          check = this.checkLimitOrder();
+        } else if (this.orderInfo[1] == "Stop") {
+          check = this.checkStopOrder();
+        }
+        if (check) {
+          if (this.orderInfo[1] != "Market") {
+            this.ordersArray.push(this.orderInfo);
+          }
+          var price;
+          if (this.selectedCurrencyGet == "BTC"){
+            price = this.currentBTC;
+          }
+          else if (this.selectedCurrencyGet == "LTC"){
+            price = this.currentLTC;
+          }
+          else if( this.selectedCurrenyGet == "ETH"){
+            price = this.currentETH;
+          }
+          else if (this.selectedCurrencyGet == "XRP"){
+            price = this.currentXRP;
+          }
+          else if (this.selectedCurrencyGet == "LINK") {
+            price = this.currentLINK;
+          }
+          var withFee = this.orderInfo[2] - (this.orderInfo[2] * .005);
+          var newRowData = [];
+          var date = new Date();
+          newRowData.push(this.orderInfo[0]);
+          newRowData.push(this.selectedCurrencyGet + "/" + this.selectedCurrencyGive);
+          if (this.orderInfo[0] == "Buy") {
+            if (this.orderInfo[1] == "Market") {
+              newRowData.push((withFee / price).toFixed(8)); // Amount bought (fee deducted)
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // USD spent
+              newRowData.push((this.orderInfo[2] * .005).toFixed(8)); // Fee in USD
+            } else {
+              newRowData.push(withFee.toFixed(8)); //Amount to buy (fee deducted)
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3]).toFixed(8)); // USD to be spent
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3] * .005).toFixed(8)); // Fee in USD
+            }
+          } else {
+            if (this.orderInfo[1] == "Market") {
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // Amount sold
+              newRowData.push((withFee * price).toFixed(8)); // USD gained (Fee deducted)
+              newRowData.push((this.orderInfo[2] * price * .005).toFixed(8)); // Fee in USD
+            } else {
+              newRowData.push(parseFloat(this.orderInfo[2]).toFixed(8)); // Amount to sell
+              newRowData.push((withFee * this.orderInfo[3]).toFixed(8)); // USD to be gained
+              newRowData.push((this.orderInfo[2] * this.orderInfo[3] * .005).toFixed(8)); // Fee in USD
+            }
+          }
+          newRowData.push(this.dateFormat(date));
+          if(this.orderInfo[1]=="Market"){
+            newRowData.push("Filled");
+          }
+          else {
+            newRowData.push("Unfilled");
+          }
+          newRowData.push(this.orderInfo[7]);
+          this.$refs.OrderHistory.newOrder(newRowData);
+        }
+      },
       selectedCurrencyGet: function() {
-        this.getPrice();
+          this.getPrice();
+      },
+      btcAmount: function() {
+        localStorage.setItem('btcAmount', JSON.stringify(this.btcAmount));
+      },
+      ethAmount: function() {
+        localStorage.setItem('ethAmount', JSON.stringify(this.ethAmount));
+      },
+      ltcAmount: function() {
+        localStorage.setItem('ltcAmount', JSON.stringify(this.ltcAmount));
+      },
+      xrpAmount: function() {
+        localStorage.setItem('xrpAmount', JSON.stringify(this.xrpAmount));
+      },
+      linkAmount: function() {
+        localStorage.setItem('linkAmount', JSON.stringify(this.linkAmount));
+      },
+      usdAmount: function() {
+        localStorage.setItem('usdAmount', JSON.stringify(this.usdAmount));
+      },
+      ordersArray: function() {
+        localStorage.setItem('ordersArray', JSON.stringify(this.ordersArray));
+      },
+      canceledOrders: function() {
+        localStorage.setItem('canceledOrders', JSON.stringify(this.canceledOrders));
       }
     },
-    mounted(){
+    mounted() {
+
       this.getPrice();
       setInterval(() => this.getPrice(), 60000);
+
+      if (!localStorage.getItem('btcAmount')) {
+        localStorage.setItem('btcAmount', JSON.stringify(this.btcAmount));
+        localStorage.setItem('ethAmount', JSON.stringify(this.ethAmount));
+        localStorage.setItem('ltcAmount', JSON.stringify(this.ltcAmount));
+        localStorage.setItem('xrpAmount', JSON.stringify(this.xrpAmount));
+        localStorage.setItem('linkAmount', JSON.stringify(this.linkAmount));
+        localStorage.setItem('usdAmount', JSON.stringify(this.usdAmount));
+        localStorage.setItem('ordersArray', JSON.stringify(this.ordersArray));
+        localStorage.setItem('canceledOrders', JSON.stringify(this.canceledOrders));
+      } else {
+          this.btcAmount = JSON.parse(localStorage.getItem('btcAmount'));
+          this.ethAmount = JSON.parse(localStorage.getItem('ethAmount'));
+          this.ltcAmount = JSON.parse(localStorage.getItem('ltcAmount'));
+          this.xrpAmount = JSON.parse(localStorage.getItem('xrpAmount'));
+          this.linkAmount = JSON.parse(localStorage.getItem('linkAmount'));
+          this.usdAmount = JSON.parse(localStorage.getItem('usdAmount'));
+          this.ordersArray = JSON.parse(localStorage.getItem('ordersArray'));
+          this.canceledOrders = JSON.parse(localStorage.getItem('canceledOrders'));
+      }
     }
   }
 </script>
@@ -730,6 +854,32 @@
     padding-left: .5rem;
   }
   .addCurrencies{
-    padding-top: 1.5rem;
+    width: 100%;
+    display: inline-block;
+  }
+  #sc-bar {
+    width: 100%;
+    display: inline-block;
+  }
+
+  #currency-select {
+    display: flex;
+    flex-flow: column;
+  }
+
+  #top {
+    display: inline-block;
+  }
+
+  #bottom {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+
+  }
+
+  #reset-button {
+    margin-top: .75rem;
   }
 </style>

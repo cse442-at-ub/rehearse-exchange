@@ -44,6 +44,12 @@ export default {
       orderLimitPrice: null
     }
   },
+  methods: {
+    resetInput() {
+      this.orderAmount = "";
+      this.orderLimitPrice = "";
+    }
+  },
   watch: {
     orderAmount: function() {
       this.$emit('changeOrderAmount', this.orderAmount);

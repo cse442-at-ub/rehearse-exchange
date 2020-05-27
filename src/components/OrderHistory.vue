@@ -12,12 +12,22 @@ export default {
   name: 'OrderHistory',
   data() {
     return {
-      hasOrders: false
-
+      hasOrders: false,
+      orderData: []
     }
   },
   methods: {
-    addRow(newRowData) {
+    updateRow(row) {
+      this.orderData[row + 1][6] = "Filled";
+      localStorage.setItem('orderData', JSON.stringify(this.orderData));
+    },
+    newOrder(newRowData) {
+      this.orderData.push(newRowData);
+      var rowIndex = this.orderData.length - 1;
+      localStorage.setItem('orderData', JSON.stringify(this.orderData));
+      this.addRow(newRowData, rowIndex);
+    },
+    addRow(newRowData, rowIndex) {
       var table = document.getElementById("order-table");
       var row;
       if (this.hasOrders) {
@@ -36,7 +46,7 @@ export default {
           cell.innerHTML = newRowData[i];
         }
 
-        if(i == 6 && newRowData[6] != "Filled"){
+        if(i == 6 && newRowData[6] != "Filled" && newRowData[6] != "Canceled"){
           var btn = document.createElement('a');
           btn.className = "delete is-medium";
           btn.style.float = "right";
@@ -45,7 +55,9 @@ export default {
             this.$emit('cancel',newRowData[7]);
             row.deleteCell(6);
             var newCell = row.insertCell(6);
-            newCell.innerHTML = "Cancelled";
+            newCell.innerHTML = "Canceled";
+            this.orderData[rowIndex][6] = "Canceled";
+            localStorage.setItem('orderData', JSON.stringify(this.orderData));
           });
         }
       }
@@ -53,7 +65,7 @@ export default {
       if (!this.hasOrders) {
         var placeholder = document.getElementById("order-placeholder");
         placeholder.parentNode.removeChild(placeholder);
-        var headerTitles = [ "Side", "Market", "Size", "Price", "Fee", "Time", "Status"];
+        var headerTitles = [ "Side", "Market", "Size", "Price (USD)", "Fee (USD)", "Time", "Status"];
         var header = table.createTHead();
         var headerRow = header.insertRow(-1);
         for (var j = 0; j < 7; j++) {
@@ -62,6 +74,15 @@ export default {
         }
         this.hasOrders = true;
         this.$emit('passTable', table);
+      }
+
+    }
+  },
+  mounted() {
+    if (localStorage.getItem('orderData')) {
+      this.orderData = JSON.parse(localStorage.getItem('orderData'));
+      for (var i = 0; i < this.orderData.length; i++) {
+        this.addRow(this.orderData[i], i);
       }
     }
   }
