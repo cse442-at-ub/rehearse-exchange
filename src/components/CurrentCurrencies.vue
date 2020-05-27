@@ -45,4 +45,5 @@ export default {
   font-size: x-large;
   float: right;
 }
+
 </style>
